@@ -7,11 +7,15 @@
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #16180F; --fg: #EEEAD6; --muted: #B0AE92; --accent: #C7CB8C; --card: #1F2216; --line: #363A28; --btn-fg: #1A1D10; color-scheme: dark; } }
 :root[data-theme="dark"] { --bg: #16180F; --fg: #EEEAD6; --muted: #B0AE92; --accent: #C7CB8C; --card: #1F2216; --line: #363A28; --btn-fg: #1A1D10; color-scheme: dark; }
 html, body { background: var(--bg); }
-body { color: var(--fg); font-family: var(--f-b); margin: 0; padding-inline: 16px; padding-block: 28px 48px; }
-main { width: 100%; max-width: min(1320px, calc((100vh - 250px) * 1.6 + var(--gap))); min-width: 0; margin: 0 auto; display: grid; gap: 18px; }
-header { display: flex; justify-content: space-between; align-items: end; gap: 12px 24px; flex-wrap: wrap; }
-h1 { font-family: var(--f-d); font-weight: 400; font-size: clamp(28px, 4.4vw, 46px); line-height: 1.05; margin: 0; color: var(--accent); text-wrap: balance; }
-header p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; max-width: 44em; }
+body { color: var(--fg); font-family: var(--f-b); margin: 0; padding-inline: 16px; padding-block: 18px 28px; }
+main { width: 100%; max-width: max(760px, min(1720px, calc((100vh - 150px) * 1.6 + var(--gap)))); min-width: 0; margin: 0 auto; display: grid; gap: 14px; }
+header { display: flex; justify-content: space-between; align-items: baseline; gap: 6px 28px; flex-wrap: wrap; }
+h1 { font-family: var(--f-d); font-weight: 400; font-size: clamp(26px, 3vw, 36px); line-height: 1.05; margin: 0; color: var(--accent); text-wrap: balance; }
+header p { margin: 0; color: var(--muted); line-height: 1.45; font-size: 15px; max-width: 52em; }
+.stage { position: relative; min-width: 0; }
+.stage .arw { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; box-shadow: 0 10px 24px -10px rgba(0,0,0,.6); }
+.stage .arw.l { left: 10px; } .stage .arw.r { right: 10px; }
+.stage .arw:disabled { opacity: 0; pointer-events: none; }
 .track { display: flex; gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; padding: 14px 12px; margin: -14px -12px; scroll-padding-inline: 12px; }
 .track::-webkit-scrollbar { display: none; }
 .track:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 16px; }
@@ -38,12 +42,13 @@ header p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; max-width: 44
   main { max-width: 100%; }
   .track img { flex-basis: 100%; width: 100%; border-radius: 14px; }
   .dots { gap: 5px; } .dots button { width: 8px; height: 8px; }
-  .ctrl { gap: 12px; } .ctrl button { width: 46px; height: 46px; }
+  .stage .arw { width: 40px; height: 40px; font-size: 17px; }
+  .stage .arw.l { left: 6px; } .stage .arw.r { right: 6px; }
 }
-.ctrl { display: flex; align-items: center; justify-content: center; gap: 18px; }
-.ctrl button { width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--accent); color: var(--btn-fg); font: 700 22px/1 var(--f-b); cursor: pointer; flex: none; }
-.ctrl button:disabled { opacity: .3; cursor: default; }
-.ctrl button:focus-visible { outline: 3px solid var(--muted); outline-offset: 3px; }
+.ctrl { display: flex; align-items: center; justify-content: center; }
+.ctrl button, .arw { width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--accent); color: var(--btn-fg); font: 700 22px/1 var(--f-b); cursor: pointer; flex: none; }
+.ctrl button:disabled, .arw:disabled { opacity: .3; cursor: default; }
+.ctrl button:focus-visible, .arw:focus-visible { outline: 3px solid var(--muted); outline-offset: 3px; }
 .mid { min-width: 0; display: grid; gap: 8px; justify-items: center; }
 .dots { display: flex; gap: 7px; flex-wrap: wrap; justify-content: center; }
 .dots button { width: 10px; height: 10px; padding: 0; border-radius: 50%; border: 0; background: var(--line); cursor: pointer; }
@@ -52,16 +57,16 @@ header p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; max-width: 44
 </style>
 <main>
   <header>
-    <div>
       <h1>La app de Alby’s</h1>
       <p>Pedidos en vivo, producción, rutas por repartidor, cobros, clientes, métricas, contenido, bot de WhatsApp y web. Deslizá para ver las 17 placas y tocá una para verla grande.</p>
-    </div>
   </header>
-  <div class="track" id="track" tabindex="0" aria-label="Placas de la propuesta"></div>
+  <div class="stage">
+    <div class="track" id="track" tabindex="0" aria-label="Placas de la propuesta"></div>
+    <button type="button" class="arw l" id="prev" aria-label="Placa anterior">←</button>
+    <button type="button" class="arw r" id="next" aria-label="Placa siguiente">→</button>
+  </div>
   <div class="ctrl">
-    <button type="button" id="prev" aria-label="Placa anterior">←</button>
     <div class="mid"><div class="dots" id="dots"></div><div class="count" id="count"></div></div>
-    <button type="button" id="next" aria-label="Placa siguiente">→</button>
   </div>
 </main>
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Placa ampliada" hidden>
