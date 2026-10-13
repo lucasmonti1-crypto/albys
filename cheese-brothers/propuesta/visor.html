@@ -1,0 +1,135 @@
+<title>Propuesta App Cheese Brothers</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=Manrope:wght@500;700;800&display=swap">
+<style>
+/* Layout: el carrusel ocupa todo el ancho; 2 placas a la vez en pantallas anchas, 1 en el celular. */
+:root { --bg: #F6F4EE; --fg: #141414; --muted: #66625A; --accent: #121212; --card: #FFFFFF; --line: #E0DCD0; --btn-fg: #F2C230;
+  --f-d: "Oswald", "Arial Narrow", sans-serif; --f-b: "Manrope", system-ui, sans-serif; --gap: 18px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #121212; --fg: #F6F4EE; --muted: #BDBAB2; --accent: #F2C230; --card: #1E1E1E; --line: #333; --btn-fg: #121212; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #121212; --fg: #F6F4EE; --muted: #BDBAB2; --accent: #F2C230; --card: #1E1E1E; --line: #333; --btn-fg: #121212; color-scheme: dark; }
+html, body { background: var(--bg); }
+body { color: var(--fg); font-family: var(--f-b); margin: 0; padding-inline: 16px; padding-block: 18px 28px; }
+main { width: 100%; max-width: max(760px, min(1720px, calc((100vh - 150px) * 1.6 + var(--gap)))); min-width: 0; margin: 0 auto; display: grid; gap: 14px; }
+header { display: flex; justify-content: space-between; align-items: baseline; gap: 6px 28px; flex-wrap: wrap; }
+h1 { font-family: var(--f-d); font-weight: 600; text-transform: uppercase; font-size: clamp(26px, 3vw, 36px); line-height: 1.05; margin: 0; color: var(--accent); text-wrap: balance; }
+header p { margin: 0; color: var(--muted); line-height: 1.45; font-size: 15px; max-width: 52em; }
+.stage { position: relative; min-width: 0; }
+.stage .arw { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; box-shadow: 0 10px 24px -10px rgba(0,0,0,.6); }
+.stage .arw.l { left: 10px; } .stage .arw.r { right: 10px; }
+.stage .arw:disabled { opacity: 0; pointer-events: none; }
+.track { display: flex; gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; padding: 14px 12px; margin: -14px -12px; scroll-padding-inline: 12px; }
+.track::-webkit-scrollbar { display: none; }
+.track:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 16px; }
+.track img { flex: 0 0 calc((100% - var(--gap)) / 2); width: calc((100% - var(--gap)) / 2); aspect-ratio: 4 / 5; scroll-snap-align: start; object-fit: cover; border-radius: 16px; border: 1px solid var(--line); background: var(--card);  cursor: zoom-in; transition: transform .22s ease, box-shadow .22s ease; }
+@media (hover: hover) { .track img:hover { transform: scale(1.03); box-shadow: 0 18px 40px -18px rgba(0,0,0,.45); position: relative; z-index: 1; } }
+.track img:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .track img { transition: none; } }
+/* Imagen ampliada */
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(12,14,8,.9); display: grid; place-items: center; overflow: auto; padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px)); }
+.lb img { max-width: 100%; max-height: calc(100vh - 32px); width: auto; height: auto; border-radius: 12px; cursor: zoom-in; box-shadow: 0 30px 80px -20px rgba(0,0,0,.7); }
+.lb[hidden] { display: none; }
+.lb.zoom .hint { display: none; }
+.lb.zoom { place-items: start center; }
+.lb.zoom img { max-height: none; width: 1080px; max-width: none; cursor: zoom-out; }
+.lb button { position: fixed; width: 50px; height: 50px; border-radius: 50%; border: 0; background: rgba(246,242,228,.92); color: #25271B; font: 700 22px/1 var(--f-b); cursor: pointer; z-index: 2; }
+.lb button:focus-visible { outline: 3px solid #F6F2E4; outline-offset: 3px; }
+.lb .x { top: calc(14px + env(safe-area-inset-top, 0px)); right: 14px; }
+.lb .p { left: 14px; top: 50%; transform: translateY(-50%); }
+.lb .nx { right: 14px; top: 50%; transform: translateY(-50%); }
+.lb .hint { position: fixed; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); color: #E9E6D2; font-size: 13px; font-weight: 700; background: rgba(0,0,0,.4); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+@media (max-width: 720px) { .lb .p, .lb .nx { top: auto; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); transform: none; } .lb .hint { display: none; } }
+@media (max-width: 720px) {
+  :root { --gap: 12px; }
+  main { max-width: 100%; }
+  .track img { flex-basis: 100%; width: 100%; border-radius: 14px; }
+  .dots { gap: 5px; } .dots button { width: 8px; height: 8px; }
+  .stage .arw { width: 40px; height: 40px; font-size: 17px; }
+  .stage .arw.l { left: 6px; } .stage .arw.r { right: 6px; }
+}
+.ctrl { display: flex; align-items: center; justify-content: center; }
+.ctrl button, .arw { width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--accent); color: var(--btn-fg); font: 700 22px/1 var(--f-b); cursor: pointer; flex: none; }
+.ctrl button:disabled, .arw:disabled { opacity: .3; cursor: default; }
+.ctrl button:focus-visible, .arw:focus-visible { outline: 3px solid var(--muted); outline-offset: 3px; }
+.mid { min-width: 0; display: grid; gap: 8px; justify-items: center; }
+.dots { display: flex; gap: 7px; flex-wrap: wrap; justify-content: center; }
+.dots button { width: 10px; height: 10px; padding: 0; border-radius: 50%; border: 0; background: var(--line); cursor: pointer; }
+.dots button.on { background: var(--accent); }
+.count { font-weight: 800; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; }
+</style>
+<main>
+  <header>
+      <h1>La app de Cheese Brothers</h1>
+      <p>Pedidos en vivo, plan de corte, stock de hormas, márgenes, rutas por repartidor, cobros, clientes, métricas, cajas navideñas, contenido y bot de WhatsApp. Deslizá para ver las 17 placas y tocá una para verla grande.</p>
+  </header>
+  <div class="stage">
+    <div class="track" id="track" tabindex="0" aria-label="Placas de la propuesta"></div>
+    <button type="button" class="arw l" id="prev" aria-label="Placa anterior">←</button>
+    <button type="button" class="arw r" id="next" aria-label="Placa siguiente">→</button>
+  </div>
+  <div class="ctrl">
+    <div class="mid"><div class="dots" id="dots"></div><div class="count" id="count"></div></div>
+  </div>
+</main>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Placa ampliada" hidden>
+  <img id="lbImg" alt="">
+  <button type="button" class="x" id="lbClose" aria-label="Cerrar">✕</button>
+  <button type="button" class="p" id="lbPrev" aria-label="Placa anterior">←</button>
+  <button type="button" class="nx" id="lbNext" aria-label="Placa siguiente">→</button>
+  <span class="hint">Tocá la imagen para verla en tamaño real · Esc para cerrar</span>
+</div>
+<script>
+const N = 17, track = document.getElementById('track'), dots = document.getElementById('dots');
+for (let i = 1; i <= N; i++) {
+  const n = String(i).padStart(2, '0');
+  track.insertAdjacentHTML('beforeend', `<img src="png/${n}.png" alt="Placa ${i} de ${N}" tabindex="0" role="button" data-i="${i - 1}" ${i > 3 ? 'loading="lazy"' : ''}>`);
+  dots.insertAdjacentHTML('beforeend', `<button type="button" aria-label="Ir a la placa ${i}"></button>`);
+}
+const step = () => { const a = track.children[0], b = track.children[1]; return b.offsetLeft - a.offsetLeft; };
+const perView = () => Math.max(1, Math.round((track.clientWidth + 1) / step()));
+const idx = () => Math.round(track.scrollLeft / step());
+const smooth = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+const goTo = (i) => track.scrollTo({ left: Math.max(0, Math.min(N - perView(), i)) * step(), behavior: smooth() });
+function sync() {
+  const i = idx(), k = perView(), last = Math.min(N, i + k);
+  document.getElementById('count').textContent = k > 1 ? `${i + 1}–${last} de ${N}` : `${i + 1} de ${N}`;
+  [...dots.children].forEach((d, j) => d.classList.toggle('on', j >= i && j < last));
+  document.getElementById('prev').disabled = i <= 0;
+  document.getElementById('next').disabled = i >= N - k;
+}
+document.getElementById('prev').onclick = () => goTo(idx() - 1);
+document.getElementById('next').onclick = () => goTo(idx() + 1);
+[...dots.children].forEach((d, j) => d.onclick = () => goTo(j));
+track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); goTo(idx() + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(idx() - 1); } });
+track.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+addEventListener('resize', sync);
+sync();
+// Ampliar una placa
+const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg');
+let cur = 0, lastFocus = null;
+function show(i) {
+  cur = (i + N) % N;
+  lbImg.src = `png/${String(cur + 1).padStart(2, '0')}.png`;
+  lbImg.alt = `Placa ${cur + 1} de ${N}`;
+  lb.classList.remove('zoom'); lb.scrollTo(0, 0);
+}
+function openLb(i) { lastFocus = document.activeElement; show(i); lb.hidden = false; document.body.style.overflow = 'hidden'; document.getElementById('lbClose').focus(); }
+function closeLb() { lb.hidden = true; document.body.style.overflow = ''; goTo(Math.min(cur, N - perView())); if (lastFocus) lastFocus.focus(); }
+let downX = null;
+track.addEventListener('pointerdown', (e) => { downX = e.clientX; });
+track.addEventListener('click', (e) => {
+  const img = e.target.closest('img[data-i]');
+  if (!img || (downX !== null && Math.abs(e.clientX - downX) > 8)) return;
+  openLb(+img.dataset.i);
+});
+track.addEventListener('keydown', (e) => { const img = e.target.closest('img[data-i]'); if (img && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openLb(+img.dataset.i); } });
+lbImg.addEventListener('click', (e) => { e.stopPropagation(); lb.classList.toggle('zoom'); });
+lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+document.getElementById('lbClose').onclick = closeLb;
+document.getElementById('lbPrev').onclick = () => show(cur - 1);
+document.getElementById('lbNext').onclick = () => show(cur + 1);
+addEventListener('keydown', (e) => {
+  if (lb.hidden) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowRight') show(cur + 1);
+  if (e.key === 'ArrowLeft') show(cur - 1);
+});
+</script>

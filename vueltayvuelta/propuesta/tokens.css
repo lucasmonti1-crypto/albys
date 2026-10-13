@@ -1,0 +1,8 @@
+:root {
+  --paper: #171513; --card: #F7F3EC; --sunk: #E9E2D6; --line: #DDD3C3;
+  --olive: #171513; --olive-2: #2A2622; --wheat: #E8743B; --cream: #F4EEE4; --cream-2: #BFB6A8;
+  --ink: #1B1916; --muted: #6E665B; --honey: #C4521F; --honey-bg: #F8DECD;
+  --ok: #2E7A45; --ok-bg: #DCEBD3; --bad: #B0452E; --bad-bg: #F5DCD1;
+  --wa: #1D8048; --wa-bubble: #D9F7C9; --sheet: #188038;
+  --f-d: "Cormorant Garamond", Georgia, serif; --f-b: "Manrope", system-ui, sans-serif; --f-h: "Cormorant Garamond", Georgia, serif;
+}

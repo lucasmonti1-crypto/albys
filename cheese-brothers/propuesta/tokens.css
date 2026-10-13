@@ -1,0 +1,8 @@
+:root {
+  --paper: #F6F4EE; --card: #FFFFFF; --sunk: #EFECE3; --line: #E0DCD0;
+  --olive: #121212; --olive-2: #2A2A2A; --wheat: #F2C230; --cream: #FFFFFF; --cream-2: #BDBAB2;
+  --ink: #141414; --muted: #66625A; --honey: #A87A06; --honey-bg: #FBEFC4;
+  --ok: #2E7A45; --ok-bg: #DCEBD3; --bad: #B0452E; --bad-bg: #F5DCD1;
+  --wa: #1D8048; --wa-bubble: #D9F7C9; --sheet: #188038;
+  --f-d: "Oswald", "Arial Narrow", sans-serif; --f-b: "Manrope", system-ui, sans-serif; --f-h: "Oswald", "Arial Narrow", sans-serif;
+}

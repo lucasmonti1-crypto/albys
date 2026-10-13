@@ -58,3 +58,14 @@ Requiere Playwright (`npm i -D playwright`). Si usás un Chromium propio: `CHROM
 ## Landing
 
 Abrí `landing/index.html` en el navegador o subí la carpeta `landing/` a Vercel, Netlify o GitHub Pages. Precios y productos están en el array `PRODUCTS` del script al final del archivo. El número de WhatsApp está en la constante `WA`.
+
+---
+
+## Otras propuestas en este repo
+
+| Carpeta | Qué es |
+|---|---|
+| `vueltayvuelta/propuesta/` | Carrusel de 16 placas para Vuelta y Vuelta (catering de asados): calculadora de carne, presupuesto y margen, presupuestos en PDF, calendario sincronizado, compras, señas y saldos, historial de eventos, métricas, contenido, bot y web. |
+| `vueltayvuelta/landing/` | Landing de Vuelta y Vuelta con la persona que cocina, servicio, galería y un formulario que arma la consulta (WhatsApp o Instagram). El número de WhatsApp va en la constante `WA`. |
+| `cheese-brothers/propuesta/` | Carrusel de 17 placas para Cheese Brothers: pedidos del viernes, plan de corte por queso y por cliente, stock de hormas, precios y margen, rutas por repartidor, cobros, clientes, métricas, cajas navideñas, contenido y bot. |
+| `tools/` | `build-slides.py` arma el `slides.html` de cada propuesta (base común + tokens de la marca) y `render.mjs` lo pasa a PNG: `node tools/render.mjs vueltayvuelta`. |

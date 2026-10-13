@@ -1,0 +1,571 @@
+<style>
+/* Vuelta y Vuelta: placas oscuras como el logo, brasa como acento, serif de la marca. */
+h1, h2, h3 { font-weight: 600; }
+h2 { font-size: 84px; }
+.hand { font-style: italic; font-weight: 500; }
+.win, .kpi, .ord, .bub, .phone .scr, .card-l { color: var(--ink); }
+.kpi b { font-weight: 700; font-variant-numeric: lining-nums tabular-nums; }
+.ord .f b, .num { font-variant-numeric: lining-nums tabular-nums; }
+.ember { color: var(--wheat); }
+.photo { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.lbl { font-size: 15px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.cut { display: grid; grid-template-columns: 1fr 120px 90px; gap: 14px; align-items: center; padding: 11px 0; border-bottom: 1px dashed var(--line); font-size: 21px; font-weight: 700; }
+.cut:last-child { border-bottom: 0; }
+.cut small { display: block; font-size: 15px; color: var(--muted); font-weight: 600; }
+.cut .bar3 { height: 10px; border-radius: 5px; background: var(--sunk); overflow: hidden; }
+.cut .bar3 i { display: block; height: 100%; background: var(--honey); }
+.cut .kg { text-align: right; font-family: var(--f-d); font-size: 32px; font-weight: 700; }
+.field { display: grid; gap: 6px; }
+.field span { font-size: 14px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.field b { font-size: 22px; background: var(--sunk); border-radius: 12px; padding: 10px 14px; }
+.ln { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--line); font-size: 20px; }
+.ln b { font-variant-numeric: tabular-nums; }
+.ln.tot { border-bottom: 0; font-weight: 800; font-size: 22px; }
+</style>
+
+<!-- 1 · PORTADA -->
+<section class="slide dark" id="s1">
+  <div class="photo" style="background-image:url(../assets/fuego.jpg);left:auto;width:58%;opacity:.95"></div>
+  <div class="photo" style="background:linear-gradient(90deg,#171513 42%,rgba(23,21,19,.65) 62%,rgba(23,21,19,.1) 100%)"></div>
+  <div class="meta" style="position:relative"><span class="brand"><img src="../assets/logo-180.png" alt="" style="border-radius:50%">Propuesta para Vuelta y Vuelta</span><span class="n">01 / 16</span></div>
+  <div style="position:relative;display:flex;flex-direction:column;gap:24px;margin-top:70px;max-width:640px">
+    <h1 style="font-size:138px;color:var(--cream);line-height:.95">La app de<br>Vuelta y Vuelta.</h1>
+    <p class="hand" style="font-size:46px;color:var(--wheat);margin:0;line-height:1.1">presupuestos · eventos<br>compras · cobros</p>
+    <p class="lead" style="max-width:15em">Todo lo que hoy se arma a mano entre WhatsApp, la calculadora y las notas del celu, en un solo lugar.</p>
+  </div>
+  <div style="margin-top:auto;position:relative;display:flex;align-items:center;gap:16px;font-size:26px;font-weight:800;color:var(--cream)">Deslizá <svg style="width:40px;height:40px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+</section>
+
+<!-- 2 · HOY -->
+<section class="slide dark" id="s2">
+  <div class="meta"><span>Cómo es hoy</span><span class="n">02 / 16</span></div>
+  <h2>Cada evento, armado a mano.</h2>
+  <div class="grow" style="display:grid;grid-template-columns:430px 1fr;gap:40px">
+    <div style="background:#EFE7DA;border-radius:30px;padding:24px 20px;display:flex;flex-direction:column;gap:13px;overflow:hidden">
+      <div class="bub">Hola! cuánto sale un asado para 40 el sábado 7? <time>09:12</time></div>
+      <div class="bub">¿Incluye vajilla y mozos? <time>09:13</time></div>
+      <div class="bub">¿Hay opción vegetariana? Somos 4 <time>09:40</time></div>
+      <div class="bub me">Ya te paso, dejame calcular 🙏 <time>10:02</time></div>
+      <div class="bub">¿Me lo mandás en PDF así se lo paso a mi viejo? <time>15:27</time></div>
+      <div class="bub">¿Cuánto es la seña? ¿A qué alias? <time>18:05</time></div>
+      <div class="bub">¿Tenés libre el 14 también? <time>21:16</time></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="kpi" style="padding:20px 22px"><b style="font-size:29px;font-family:var(--f-b);font-weight:800">Presupuestos a mano</b><p style="margin:6px 0 0;font-size:22px;color:var(--muted);line-height:1.35">Kilos por persona, precio de la carne de esta semana, ayudantes y traslado: todo se calcula de cero cada vez.</p></div>
+      <div class="kpi" style="padding:20px 22px"><b style="font-size:29px;font-family:var(--f-b);font-weight:800">¿Cuánto gané en este evento?</b><p style="margin:6px 0 0;font-size:22px;color:var(--muted);line-height:1.35">La carne sube todas las semanas y el margen real se pierde de vista.</p></div>
+      <div class="kpi" style="padding:20px 22px"><b style="font-size:29px;font-family:var(--f-b);font-weight:800">Fechas y señas sueltas</b><p style="margin:6px 0 0;font-size:22px;color:var(--muted);line-height:1.35">Eventos en el chat, señas en el home banking y el riesgo de pisar dos fechas.</p></div>
+      <div class="kpi" style="padding:20px 22px"><b style="font-size:29px;font-family:var(--f-b);font-weight:800">Lo aprendido se pierde</b><p style="margin:6px 0 0;font-size:22px;color:var(--muted);line-height:1.35">Qué sobró, qué faltó y qué pidió cada cliente queda en la memoria.</p></div>
+    </div>
+  </div>
+  <p class="foot" style="font-size:30px"><b>Todo esto se puede ordenar y automatizar.</b></p>
+</section>
+
+<!-- 3 · CÓMO SE CONECTA -->
+<section class="slide dark" id="s3">
+  <div class="meta"><span>La idea</span><span class="n">03 / 16</span></div>
+  <h2>Una app conectada a lo que ya usás.</h2>
+  <p class="lead">El Excel sigue siendo la base. La app lo convierte en presupuestos, compras, fechas y cobros.</p>
+  <div class="grow" style="position:relative">
+    <svg viewBox="0 0 928 820" width="928" height="820" style="position:absolute;inset:0" aria-hidden="true">
+      <g stroke="#E8743B" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round" fill="none" opacity=".7">
+        <path d="M464 410 L150 120"/><path d="M464 410 L778 120"/><path d="M464 410 L110 420"/><path d="M464 410 L818 420"/><path d="M464 410 L150 710"/><path d="M464 410 L778 710"/>
+      </g>
+      <circle cx="464" cy="410" r="170" fill="#2A2622"/>
+    </svg>
+    <img src="../assets/logo.png" alt="" style="position:absolute;left:334px;top:280px;width:260px;height:260px;border-radius:50%">
+    <style>
+      .node { position: absolute; width: 300px; background: var(--card); color: var(--ink); border-radius: 22px; padding: 18px 20px; display: grid; grid-template-columns: 58px 1fr; gap: 14px; align-items: center; }
+      .node .i { width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center; }
+      .node .i svg { width: 32px; height: 32px; }
+      .node b { font-size: 24px; display: block; line-height: 1.15; }
+      .node small { font-size: 18px; color: var(--muted); line-height: 1.3; display: block; margin-top: 3px; }
+    </style>
+    <div class="node" style="left:0;top:40px"><div class="i" style="background:#DDEEDF;color:var(--sheet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 9v12"/></svg></div><div><b>Google Sheets</b><small>Eventos, clientes y precios</small></div></div>
+    <div class="node" style="right:0;top:40px"><div class="i" style="background:#D6F0DE;color:var(--wa)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 20l1.3-4A8 8 0 1 1 8.5 19z"/></svg></div><div><b>WhatsApp</b><small>Consultas y presupuestos</small></div></div>
+    <div class="node" style="left:-30px;top:350px;width:280px"><div class="i" style="background:#DCE6F2;color:#2F5E9E"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><div><b>Calendario</b><small>Sincronizado al celu</small></div></div>
+    <div class="node" style="right:-30px;top:350px;width:280px"><div class="i" style="background:#F8DECD;color:var(--honey)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg></div><div><b>PDF</b><small>Presupuestos y recibos</small></div></div>
+    <div class="node" style="left:0;top:650px"><div class="i" style="background:#F5DCD1;color:var(--bad)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7h18l-2 12H5z"/><path d="M8 7l2-4M16 7l-2-4"/></svg></div><div><b>Compras</b><small>Carnicería y proveedores</small></div></div>
+    <div class="node" style="right:0;top:650px"><div class="i" style="background:#E9E2D6;color:var(--ink)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><div><b>Web + Instagram</b><small>Consultas desde la bio</small></div></div>
+  </div>
+</section>
+
+<!-- 4 · CALCULADORA DE CARNE -->
+<section class="slide dark" id="s4">
+  <div class="meta"><span>Calculadora de carne</span><span class="n">04 / 16</span></div>
+  <h2>Cuántos kilos de cada corte.</h2>
+  <p class="lead">Cargás invitados y menú, y la app reparte los kilos con tu propia regla. Nada de calcular en el momento.</p>
+  <div class="win grow">
+    <div class="bar"><i></i><i></i><i></i><div class="url"><b>app.vueltayvuelta.ar</b>/calculadora</div></div>
+    <div style="display:grid;grid-template-columns:300px 1fr;gap:24px;padding:22px 24px;flex:1">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="field"><span>Evento</span><b>Cumple 50 · Martín</b></div>
+        <div class="field"><span>Adultos</span><b class="num">32</b></div>
+        <div class="field"><span>Chicos</span><b class="num">8</b></div>
+        <div class="field"><span>Regla</span><b>500 g por adulto<br>250 g por chico</b></div>
+        <div class="field"><span>Menú</span><b>Clásico + matambre</b></div>
+        <span class="pill honey" style="align-self:flex-start;font-size:17px">+10% de reserva: desactivado</span>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <div class="row" style="margin-bottom:6px"><span class="lbl">Cortes</span><span class="lbl">Total <b class="num" style="color:var(--ink);font-size:22px;letter-spacing:0">18,0 kg</b></span></div>
+        <div class="cut"><div>Vacío<small>33% del total</small></div><div class="bar3"><i style="width:100%"></i></div><div class="kg num">6,0 kg</div></div>
+        <div class="cut"><div>Bondiola<small>20%</small></div><div class="bar3"><i style="width:60%"></i></div><div class="kg num">3,6 kg</div></div>
+        <div class="cut"><div>Chorizo<small>30 unidades</small></div><div class="bar3"><i style="width:50%"></i></div><div class="kg num">3,0 kg</div></div>
+        <div class="cut"><div>Entraña<small>15%</small></div><div class="bar3"><i style="width:45%"></i></div><div class="kg num">2,7 kg</div></div>
+        <div class="cut"><div>Morcilla<small>15 unidades</small></div><div class="bar3"><i style="width:25%"></i></div><div class="kg num">1,5 kg</div></div>
+        <div class="cut"><div>Matambre<small>1 pieza</small></div><div class="bar3"><i style="width:20%"></i></div><div class="kg num">1,2 kg</div></div>
+        <span class="wa-btn" style="align-self:flex-start;margin-top:16px;font-size:18px;padding:10px 18px">Mandar lista a la carnicería</span>
+        <div style="margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding-top:14px">
+          <div class="kpi" style="background:var(--sunk);border:0"><small>Provoletas</small><b>8</b></div>
+          <div class="kpi" style="background:var(--sunk);border:0"><small>Pan</small><b>40</b></div>
+          <div class="kpi" style="background:var(--sunk);border:0"><small>Carbón</small><b>25 kg</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · PRESUPUESTO Y MARGEN -->
+<section class="slide dark" id="s5">
+  <div class="meta"><span>Presupuesto y margen</span><span class="n">05 / 16</span></div>
+  <h2>Cuánto cobrar y cuánto te queda.</h2>
+  <p class="lead">Con los precios de la carnicería de esta semana, la app calcula el costo real y el margen de cada evento.</p>
+  <div class="grow" style="display:grid;grid-template-columns:1fr 360px;gap:22px">
+    <div class="win" style="padding:22px 26px">
+      <div class="row" style="margin-bottom:6px"><b style="font-size:26px">Cumple 50 · Martín</b><span class="pill neutral">40 personas</span></div>
+      <div class="ln"><span>Carne (18 kg)</span><b>$252.000</b></div>
+      <div class="ln"><span>Achuras, provoletas y verduras</span><b>$45.000</b></div>
+      <div class="ln"><span>Pan, chimichurri y salsas</span><b>$22.000</b></div>
+      <div class="ln"><span>Carbón y leña</span><b>$28.000</b></div>
+      <div class="ln"><span>2 ayudantes</span><b>$120.000</b></div>
+      <div class="ln"><span>Traslado (32 km)</span><b>$15.000</b></div>
+      <div class="ln tot"><span>Costo total</span><b>$482.000</b></div>
+      <div style="margin-top:10px;background:var(--sunk);border-radius:16px;padding:16px 18px;display:grid;gap:4px">
+        <div class="row"><span style="font-size:20px;font-weight:700">Precio por persona</span><b class="num" style="font-size:26px">$21.000</b></div>
+        <div class="row"><span style="font-size:20px;font-weight:700">Precio al cliente</span><b class="num" style="font-size:26px">$840.000</b></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="kpi ok" style="padding:22px"><small>Te queda</small><b style="font-size:52px">$358.000</b></div>
+      <div class="kpi ok" style="padding:22px"><small>Margen</small><b style="font-size:52px">43%</b></div>
+      <div class="kpi" style="padding:20px;background:var(--honey-bg);border:0"><small style="color:var(--honey)">Aviso</small><p style="margin:6px 0 0;font-size:20px;line-height:1.35;font-weight:600">Si la carne sube 8%, el margen baja a 40%. Sugerencia: <b>$22.000 por persona</b>.</p></div>
+    </div>
+  </div>
+  <p class="foot" style="font-size:20px">Precios de ejemplo.</p>
+</section>
+
+<!-- 6 · PDF -->
+<section class="slide dark" id="s6">
+  <div class="meta"><span>Presupuestos en PDF</span><span class="n">06 / 16</span></div>
+  <h2>Un presupuesto lindo, en un minuto.</h2>
+  <div class="grow" style="display:grid;grid-template-columns:560px 1fr;gap:44px;align-items:start">
+    <div class="card-l" style="background:#fff;border-radius:6px;padding:40px 40px 34px;box-shadow:0 40px 80px -30px rgba(0,0,0,.8);display:flex;flex-direction:column;gap:16px;transform:rotate(-1.5deg)">
+      <div class="row"><img src="../assets/logo-180.png" alt="" style="width:86px;height:86px;border-radius:50%"><div style="text-align:right"><b style="font-family:var(--f-d);font-size:34px;display:block">Presupuesto</b><span style="font-size:16px;color:var(--muted);font-weight:700">N.º 0127 · 13/10/2026</span></div></div>
+      <div style="border-top:2px solid #171513;padding-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;font-size:17px">
+        <div><span class="lbl" style="font-size:12px">Cliente</span><br><b>Martín Gómez</b></div>
+        <div><span class="lbl" style="font-size:12px">Fecha</span><br><b>Sáb 7/11 · 13 h</b></div>
+        <div><span class="lbl" style="font-size:12px">Lugar</span><br><b>Nordelta</b></div>
+        <div><span class="lbl" style="font-size:12px">Invitados</span><br><b>32 adultos + 8 chicos</b></div>
+      </div>
+      <div style="font-size:17px;line-height:1.55"><span class="lbl" style="font-size:12px">Menú</span><br>Recepción con provoleta, chorizo y morcilla. Vacío, bondiola, entraña y matambre. Verduras al rescoldo, pan y salsas.</div>
+      <div style="font-size:17px;line-height:1.55"><span class="lbl" style="font-size:12px">Incluye</span><br>Compra de la carne, parrilleros, carbón y leña, armado y limpieza de la parrilla.</div>
+      <div style="background:#171513;color:#F4EEE4;border-radius:8px;padding:16px 18px;display:grid;gap:6px">
+        <div class="row" style="font-size:18px"><span>Total (40 × $21.000)</span><b class="num" style="font-size:24px">$840.000</b></div>
+        <div class="row" style="font-size:16px;color:#BFB6A8"><span>Seña para reservar la fecha (30%)</span><b class="num">$252.000</b></div>
+      </div>
+      <span style="font-size:13px;color:var(--muted)">Válido por 7 días. Precio sujeto al valor de la carne.</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:28px;padding-top:20px">
+      <ul class="ticks">
+        <li><span>Sale <b>con tu logo</b> y los datos del evento, sin tipear nada.</span></li>
+        <li><span>Se manda <b>por WhatsApp o mail</b> con un toque.</span></li>
+        <li><span>Cuando el cliente confirma, se convierte en <b>evento del calendario</b>.</span></li>
+        <li><span>Después del evento sale <b>el recibo</b> con la seña y el saldo.</span></li>
+      </ul>
+      <div style="display:flex;gap:12px;flex-wrap:wrap"><span class="wa-btn" style="font-size:20px;padding:12px 20px">Mandar por WhatsApp</span><span class="pill" style="background:var(--cream);color:var(--ink);font-size:20px;padding:12px 20px">Descargar PDF</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · CALENDARIO -->
+<section class="slide dark" id="s7">
+  <div class="meta"><span>Calendario</span><span class="n">07 / 16</span></div>
+  <h2>Todos los eventos, en el celu.</h2>
+  <p class="lead">Un calendario sincronizado con Google Calendar: lo editás desde el teléfono y se actualiza en todos lados.</p>
+  <style>
+    .cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; padding: 12px 18px 16px; }
+    .cal .d { font-size: 14px; font-weight: 800; color: var(--muted); text-align: center; padding-bottom: 4px; letter-spacing: .06em; }
+    .cal .c { min-height: 88px; border-radius: 10px; background: color-mix(in srgb, var(--sunk) 45%, var(--card)); padding: 6px 7px; font-size: 14px; font-weight: 700; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+    .cal .c.o { background: transparent; }
+    .cal .ev { background: #171513; color: #F4EEE4; border-radius: 7px; padding: 5px 7px; font-size: 14px; line-height: 1.2; }
+    .cal .ev.h { background: var(--honey); }
+    .cal .ev.p { background: var(--sunk); color: var(--ink); border: 1px dashed var(--muted); }
+  </style>
+  <div style="display:flex;flex-direction:column;gap:18px">
+    <div class="win">
+      <div class="row" style="padding:16px 20px 0"><b style="font-family:var(--f-d);font-size:32px">Noviembre 2026</b><span class="pill ok">Sincronizado</span></div>
+      <div class="cal">
+        <span class="d">LUN</span><span class="d">MAR</span><span class="d">MIÉ</span><span class="d">JUE</span><span class="d">VIE</span><span class="d">SÁB</span><span class="d">DOM</span>
+        <div class="c o"></div><div class="c o"></div><div class="c o"></div><div class="c o"></div><div class="c o"></div><div class="c o"></div><div class="c">1</div>
+        <div class="c">2</div><div class="c">3</div><div class="c">4</div><div class="c">5</div><div class="c">6</div><div class="c">7<span class="ev h">Cumple 50<br>40 personas</span></div><div class="c">8</div>
+        <div class="c">9</div><div class="c">10</div><div class="c">11</div><div class="c">12</div><div class="c">13<span class="ev">Empresa<br>60 personas</span></div><div class="c">14<span class="ev">Casamiento<br>80 personas</span></div><div class="c">15</div>
+        <div class="c">16</div><div class="c">17</div><div class="c">18</div><div class="c">19</div><div class="c">20</div><div class="c">21<span class="ev p">Cumple<br>a confirmar</span></div><div class="c">22<span class="ev">Bautismo<br>30 personas</span></div>
+        <div class="c">23</div><div class="c">24</div><div class="c">25</div><div class="c">26</div><div class="c">27</div><div class="c">28<span class="ev">Egresados<br>50 personas</span></div><div class="c">29</div>
+        <div class="c">30</div><div class="c o"></div><div class="c o"></div><div class="c o"></div><div class="c o"></div><div class="c o"></div><div class="c o"></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:18px">
+      <div class="win" style="padding:18px 20px;display:grid;gap:8px">
+        <div class="row"><b style="font-size:24px">Cumple 50 · Martín</b><span class="pill honey" style="font-size:15px">Sáb 7/11 · 13 h</span></div>
+        <div style="font-size:17px;color:var(--muted);font-weight:600">Nordelta · 40 personas · Menú clásico</div>
+        <div class="row" style="font-size:18px;font-weight:700"><span>Seña <span class="pill ok" style="font-size:13px">Cobrada</span></span><span class="num">Saldo $588.000</span></div>
+        <div style="border-top:1px dashed var(--line);padding-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;font-size:16px;font-weight:600">
+          <span>☑ Comprar carne</span><span>☑ Confirmar ayudantes</span><span>☐ Parrilla portátil</span><span>☐ Recordatorio</span>
+        </div>
+      </div>
+      <div style="background:rgba(244,238,228,.12);border:1px solid rgba(244,238,228,.2);border-radius:22px;padding:18px 20px;color:var(--cream);font-size:19px;line-height:1.4;align-self:stretch"><b style="display:block;font-size:14px;color:var(--cream-2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Notificación en el celu · mañana</b>Cumple 50 de Martín, 13 h en Nordelta. <b>Hoy: retirar 18 kg de carne.</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · COMPRAS -->
+<section class="slide dark" id="s8">
+  <div class="meta"><span>Compras</span><span class="n">08 / 16</span></div>
+  <h2>La lista de compras, sola.</h2>
+  <p class="lead">Suma todos los eventos de la semana, separa por proveedor y guarda cuánto pagaste para seguir los precios.</p>
+  <style>
+    .chk { display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px dashed var(--line); font-size: 19px; font-weight: 700; }
+    .chk:last-child { border-bottom: 0; }
+    .chk i { width: 24px; height: 24px; border-radius: 7px; border: 2px solid var(--muted); display: block; }
+    .chk i.on { background: var(--ok); border-color: var(--ok); }
+    .chk em { font-style: normal; color: var(--muted); font-weight: 600; font-size: 16px; }
+  </style>
+  <div class="grow" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="win" style="padding:20px 22px;gap:4px">
+      <div class="row"><b style="font-size:24px">Semana del 2 al 8/11</b><span class="pill neutral">2 eventos</span></div>
+      <span class="lbl" style="margin-top:12px">Carnicería · Don Ramón</span>
+      <div class="chk"><i class="on"></i><span>Vacío</span><em class="num">6,0 kg</em></div>
+      <div class="chk"><i class="on"></i><span>Bondiola</span><em class="num">3,6 kg</em></div>
+      <div class="chk"><i></i><span>Entraña</span><em class="num">2,7 kg</em></div>
+      <div class="chk"><i></i><span>Chorizo y morcilla</span><em class="num">45 u</em></div>
+      <span class="lbl" style="margin-top:12px">Verdulería y almacén</span>
+      <div class="chk"><i></i><span>Morrones, cebollas y papas</span><em>8 kg</em></div>
+      <div class="chk"><i></i><span>Provoletas</span><em>8 u</em></div>
+      <span class="lbl" style="margin-top:12px">Carbón y leña</span>
+      <div class="chk"><i></i><span>Carbón + leña de quebracho</span><em>25 kg</em></div>
+    </div>
+    <div class="win" style="padding:20px 22px">
+      <div class="row"><b style="font-size:24px">Precio del vacío</b><span class="pill bad">+12% en 2 meses</span></div>
+      <svg viewBox="0 0 440 300" width="100%" style="margin-top:14px" id="pchart"></svg>
+      <div style="margin-top:auto;background:var(--honey-bg);border-radius:14px;padding:14px 16px;font-size:18px;font-weight:600;line-height:1.4">La carne subió más que tu precio por persona. <b>Revisá el presupuesto de los eventos sin seña.</b></div>
+    </div>
+  </div>
+  <p class="foot" style="font-size:20px">Proveedores y precios de ejemplo.</p>
+</section>
+
+<!-- 9 · COBROS -->
+<section class="slide dark" id="s9">
+  <div class="meta"><span>Cobros</span><span class="n">09 / 16</span></div>
+  <h2>Señas y saldos, al día.</h2>
+  <p class="lead">Cada evento sabe cuánto se cobró y cuánto falta. Los recordatorios salen por WhatsApp con el mensaje ya escrito.</p>
+  <style>
+    .evr { display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px dashed var(--line); }
+    .evr:last-child { border-bottom: 0; }
+    .evr b { font-size: 22px; display: block; } .evr small { font-size: 16px; color: var(--muted); font-weight: 600; }
+    .evr .m { font-family: var(--f-d); font-size: 30px; font-weight: 700; text-align: right; }
+  </style>
+  <div class="win grow">
+    <div class="bar"><i></i><i></i><i></i><div class="url"><b>app.vueltayvuelta.ar</b>/cobros</div></div>
+    <div style="padding:22px 24px;display:flex;flex-direction:column;gap:16px">
+      <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi ok"><small>Cobrado en octubre</small><b>$2.310.000</b></div>
+        <div class="kpi"><small>Señas por cobrar</small><b>$486.000</b></div>
+        <div class="kpi bad"><small>Saldos vencidos</small><b>$190.000</b></div>
+      </div>
+      <div>
+        <div class="evr"><div><b>Cumple · Sofía</b><small>Sáb 21/11 · presupuesto enviado hace 3 días</small></div><span class="pill honey">Falta seña</span><span class="wa-btn">Recordar</span></div>
+        <div class="evr"><div><b>Casamiento · Lucía y Tomás</b><small>Sáb 14/11 · seña $720.000 cobrada</small></div><span class="pill ok">Seña ✓</span><span class="m num">$1.680.000</span></div>
+        <div class="evr"><div><b>Empresa · Grupo Delta</b><small>Vie 13/11 · factura enviada</small></div><span class="pill ok">Seña ✓</span><span class="m num">$1.050.000</span></div>
+        <div class="evr"><div><b>Asado de egresados · San Juan</b><small>Fue el 03/10 · saldo vencido</small></div><span class="pill bad">Debe</span><span class="wa-btn">Recordar</span></div>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute;right:56px;bottom:60px;width:470px;background:#EFE7DA;border-radius:26px;padding:18px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8);transform:rotate(2deg)">
+    <div class="bub me" style="max-width:100%;font-size:20px">Hola Sofi! ¿Cómo va? Para reservar el sábado 21 te pido la seña del 30%: <b>$165.000</b>. Te dejo el presupuesto en PDF 🔥 <time>10:30 ✓✓</time></div>
+  </div>
+</section>
+
+<!-- 10 · HISTORIAL -->
+<section class="slide dark" id="s10">
+  <div class="meta"><span>Historial de eventos</span><span class="n">10 / 16</span></div>
+  <h2>Cada evento te enseña algo.</h2>
+  <p class="lead">Todos los eventos guardados con su menú, lo que sobró, las fotos y la reseña del cliente. El próximo sale mejor.</p>
+  <div class="grow" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="win" style="overflow:hidden">
+      <div style="height:260px;background:url(../assets/parrilla-chef.jpg) center 30%/cover"></div>
+      <div style="padding:20px 22px;display:grid;gap:10px">
+        <div class="row"><b style="font-size:26px">Cumple 30 · Agustina</b><span class="pill neutral">19/09</span></div>
+        <div style="font-size:18px;color:var(--muted);font-weight:600">35 personas · Tigre · Menú clásico</div>
+        <div class="row" style="font-size:19px;font-weight:700"><span>Calculado</span><span class="num">16,0 kg</span></div>
+        <div class="row" style="font-size:19px;font-weight:700"><span>Sobró</span><span class="num" style="color:var(--honey)">1,4 kg de vacío</span></div>
+        <div style="background:var(--sunk);border-radius:12px;padding:12px 14px;font-size:17px;line-height:1.4">“Todo buenísimo, la bondiola un 10. Los volvemos a llamar.” <b>★★★★★</b></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill honey" style="font-size:15px">Duplicar menú</span><span class="pill neutral" style="font-size:15px">Ver 24 fotos</span></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="win" style="padding:20px 22px;display:grid;gap:8px">
+        <span class="lbl">La app aprende</span>
+        <b style="font-size:24px;line-height:1.25">En los últimos 6 eventos de cumple sobró un 8% de vacío.</b>
+        <span style="font-size:18px;color:var(--muted);font-weight:600">Sugerencia: bajar la regla a 460 g por adulto en cumpleaños.</span>
+      </div>
+      <div class="win" style="padding:20px 22px;display:grid;gap:10px">
+        <span class="lbl">Clientes</span>
+        <div class="row" style="font-size:19px;font-weight:700"><span>Agustina R. · 3 eventos</span><span class="pill ok" style="font-size:14px">Recomienda</span></div>
+        <div class="row" style="font-size:19px;font-weight:700"><span>Grupo Delta · 2 eventos</span><span class="pill neutral" style="font-size:14px">Empresa</span></div>
+        <div class="row" style="font-size:19px;font-weight:700"><span>Familia Paz · hace 1 año</span><span class="wa-btn" style="font-size:14px;padding:6px 12px">Saludar</span></div>
+      </div>
+      <div style="color:var(--cream);font-size:20px;line-height:1.45"><span class="ember" style="font-weight:800">Aniversarios:</span> la app avisa cuando se cumple un año de un evento, para escribirle al cliente.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · MÉTRICAS -->
+<section class="slide dark" id="s11" style="gap:26px">
+  <div class="meta"><span>Métricas</span><span class="n">11 / 16</span></div>
+  <h2>Datos para decidir.</h2>
+  <style>
+    .rk { padding: 8px 0 9px; border-bottom: 1px dashed var(--line); }
+    .rk:last-child { border-bottom: 0; }
+    .rk .rt { display: flex; justify-content: space-between; font-size: 19px; font-weight: 700; }
+    .rk .rt span { color: var(--muted); font-weight: 600; font-size: 16px; }
+    .rk .rb { height: 8px; border-radius: 4px; background: var(--sunk); margin-top: 6px; overflow: hidden; }
+    .rk .rb i { display: block; height: 100%; }
+    .mc { border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px 8px; min-width: 0; }
+    .mc h3 { font-family: var(--f-b); font-weight: 800; font-size: 16px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .ins { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .ins div { background: var(--card); color: var(--muted); border-radius: 20px; padding: 18px; font-size: 18px; line-height: 1.35; }
+    .ins b { display: block; color: var(--ink); font-size: 20px; line-height: 1.25; }
+    .ins em { font-style: normal; color: var(--honey); font-weight: 800; display: block; margin-top: 8px; }
+  </style>
+  <div class="win" style="flex:none">
+    <div class="bar"><i></i><i></i><i></i><div class="url"><b>app.vueltayvuelta.ar</b>/metricas</div></div>
+    <div style="padding:18px 22px 20px;display:flex;flex-direction:column;gap:16px">
+      <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kpi"><small>Eventos 2026</small><b>38</b></div>
+        <div class="kpi"><small>Por persona</small><b>$20.400</b></div>
+        <div class="kpi ok"><small>Margen prom.</small><b>41%</b></div>
+        <div class="kpi"><small>Consultas → evento</small><b>41%</b></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="mc"><h3>Cortes más pedidos</h3>
+          <div class="rk"><div class="rt">Vacío<span>en 36 de 38 eventos</span></div><div class="rb"><i style="width:95%;background:var(--honey)"></i></div></div>
+          <div class="rk"><div class="rt">Bondiola<span>31 eventos</span></div><div class="rb"><i style="width:82%;background:var(--honey)"></i></div></div>
+          <div class="rk"><div class="rt">Entraña<span>24 eventos</span></div><div class="rb"><i style="width:63%;background:var(--honey)"></i></div></div>
+          <div class="rk"><div class="rt">Ahumados<span>9 eventos</span></div><div class="rb"><i style="width:24%;background:var(--honey)"></i></div></div>
+        </div>
+        <div class="mc"><h3>Margen por tipo de evento</h3>
+          <div class="rk"><div class="rt">Empresas<span>48% · 7 eventos</span></div><div class="rb"><i style="width:100%;background:var(--ok)"></i></div></div>
+          <div class="rk"><div class="rt">Casamientos<span>44% · 4 eventos</span></div><div class="rb"><i style="width:92%;background:var(--ok)"></i></div></div>
+          <div class="rk"><div class="rt">Cumpleaños<span>39% · 21 eventos</span></div><div class="rb"><i style="width:81%;background:var(--ok)"></i></div></div>
+          <div class="rk"><div class="rt">Egresados<span>31% · 6 eventos</span></div><div class="rb"><i style="width:65%;background:var(--bad)"></i></div></div>
+        </div>
+      </div>
+      <div class="mc"><h3>Eventos por mes</h3>
+        <svg viewBox="0 0 880 150" width="100%" id="mchart" style="display:block"></svg>
+      </div>
+    </div>
+  </div>
+  <div class="ins">
+    <div><b>Las empresas dejan 48% de margen.</b><em>→ Armar un menú corporativo</em></div>
+    <div><b>Los ahumados se piden poco, pero son tu sello.</b><em>→ Mostrarlos más en contenido</em></div>
+    <div><b>Diciembre ya tiene 9 consultas.</b><em>→ Pedir seña para reservar</em></div>
+  </div>
+</section>
+
+<!-- 12 · CONTENIDO -->
+<section class="slide dark" id="s12" style="gap:26px">
+  <div class="meta"><span>Contenido</span><span class="n">12 / 16</span></div>
+  <h2>Cada evento, también es contenido.</h2>
+  <p class="lead">Las fotos y videos se guardan por evento y se ordenan en un tablero para Instagram, TikTok y Meta Ads.</p>
+  <style>
+    .kb { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 16px 18px 20px; }
+    .kb-col { background: color-mix(in srgb, var(--sunk) 55%, var(--card)); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+    .kb-col > b { font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 2px 4px; }
+    .kb-c { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+    .kb-c img { width: 100%; height: 240px; object-fit: cover; display: block; }
+    .kb-c .bd { padding: 10px 11px; display: grid; gap: 6px; }
+    .kb-c .t { font-size: 16px; font-weight: 800; line-height: 1.25; }
+    .kb-c .w { font-size: 13px; color: var(--muted); font-weight: 700; }
+    .pf { display: inline-flex; font-size: 12px; font-weight: 800; padding: 3px 8px; border-radius: 999px; }
+    .pf.ig { background: #F6DCE6; color: #A3265A; } .pf.tt { background: #171513; color: #F4EEE4; } .pf.ad { background: #DCE6F2; color: #2F5E9E; }
+  </style>
+  <div class="win" style="flex:none">
+    <div class="bar"><i></i><i></i><i></i><div class="url"><b>app.vueltayvuelta.ar</b>/contenido</div></div>
+    <div class="kb">
+      <div class="kb-col"><b>Ideas</b>
+        <div class="kb-c"><div class="bd"><span class="pf tt">TikTok</span><span class="t">Cómo prendo el fuego en 5 minutos</span></div></div>
+        <div class="kb-c"><div class="bd"><span class="pf ig">Reel</span><span class="t">Ahumado de 8 horas, de principio a fin</span></div></div>
+      </div>
+      <div class="kb-col"><b>Para editar</b>
+        <div class="kb-c"><img src="../assets/fogonero.jpg" alt=""><div class="bd"><span class="pf ig">Reel</span><span class="t">Cumple 30 · Agustina</span><span class="w">24 fotos · 6 videos</span></div></div>
+      </div>
+      <div class="kb-col"><b>Listo</b>
+        <div class="kb-c"><img src="../assets/duo.jpg" alt=""><div class="bd"><span class="pf ig">Carrusel</span><span class="t">El equipo detrás del fuego</span><span class="w">Jue 15/10 · 19 h</span></div></div>
+      </div>
+      <div class="kb-col"><b>Publicado</b>
+        <div class="kb-c"><img src="../assets/chef-caption.jpg" alt="" style="object-position:center 25%"><div class="bd"><span class="pf ig">Reel</span><span class="pf ad">Anuncio</span><span class="t">“Acá estoy para cualquier evento”</span><span class="w" style="color:var(--ok)">18 consultas</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+    <div class="win" style="padding:18px 20px;display:grid;gap:8px;align-content:start">
+      <span class="lbl">Mensajes guardados</span>
+      <div class="row" style="font-size:18px;font-weight:700"><span>Respuesta a “¿cuánto sale?”</span><span class="pill neutral" style="font-size:14px">Copiar</span></div>
+      <div class="row" style="font-size:18px;font-weight:700"><span>Datos para la seña</span><span class="pill neutral" style="font-size:14px">Copiar</span></div>
+      <div class="row" style="font-size:18px;font-weight:700"><span>Pedido de reseña</span><span class="pill neutral" style="font-size:14px">Copiar</span></div>
+    </div>
+    <div class="win" style="padding:18px 20px;display:grid;gap:8px;align-content:start">
+      <span class="lbl">Kit de marca</span>
+      <div style="display:flex;gap:8px"><i style="width:56px;height:44px;border-radius:10px;background:#171513;display:block"></i><i style="width:56px;height:44px;border-radius:10px;background:#F4EEE4;border:1px solid var(--line);display:block"></i><i style="width:56px;height:44px;border-radius:10px;background:#E8743B;display:block"></i></div>
+      <span style="font-family:var(--f-d);font-size:28px;font-weight:600">Lo tradicional y lo original</span>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · BOT -->
+<section class="slide dark" id="s13">
+  <div class="meta"><span>Etapa siguiente</span><span class="n">13 / 16</span></div>
+  <h2>Un bot que cotiza por vos.</h2>
+  <div class="grow" style="display:grid;grid-template-columns:420px 1fr;gap:56px;align-items:start">
+    <div class="phone">
+      <div class="scr">
+        <div class="sb" style="background:#F7F6F0"><span>22:41</span><span>●●●</span></div>
+        <div class="chat-h"><img src="../assets/logo-180.png" alt=""><div><b>Vuelta y Vuelta</b><small>cuenta de empresa</small></div></div>
+        <div class="chat">
+          <div class="bub me">Hola! quiero un asado para 40 el domingo 29/11 <time>22:38</time></div>
+          <div class="bub">¡Hola! 🔥 El domingo 29 está <b>libre</b>. ¿Cuántos son chicos y en qué zona es?<time>22:38</time></div>
+          <div class="bub me">8 chicos, en Tigre <time>22:39</time></div>
+          <div class="bub">Con el menú clásico sale <b>$21.000 por persona</b>: $840.000. Te paso el presupuesto en PDF 📄<time>22:39</time></div>
+          <div class="bub">Para reservar la fecha, la seña es del 30%. ¿Te paso los datos?<time>22:40</time></div>
+          <div class="bub me">Dale! <time>22:41</time></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:30px;padding-top:20px">
+      <ul class="ticks">
+        <li><span>Responde <b>“¿cuánto sale?”</b> a cualquier hora, con tus precios.</span></li>
+        <li><span>Mira el calendario y dice si la <b>fecha está libre</b>.</span></li>
+        <li><span>Manda el <b>presupuesto en PDF</b> y los datos de la seña.</span></li>
+        <li><span>Si la consulta es especial, <b>te la pasa a vos</b>.</span></li>
+      </ul>
+      <p class="hand" style="font-size:52px;color:var(--wheat);margin:0;line-height:1.05">Vos en la parrilla,<br>el bot en el celu.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · WEB -->
+<section class="slide dark" id="s14">
+  <div class="meta"><span>Para conseguir más eventos</span><span class="n">14 / 16</span></div>
+  <h2>Una web que muestra quién está detrás.</h2>
+  <div class="grow" style="display:grid;grid-template-columns:420px 1fr;gap:52px;align-items:start">
+    <div class="phone"><div class="scr"><img src="landing-mobile.png" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top"></div></div>
+    <div style="display:flex;flex-direction:column;gap:28px">
+      <ul class="ticks">
+        <li><span>Para el <b>link de la bio</b>: en vez de una lista de botones, una página propia.</span></li>
+        <li><span><b>Quién cocina</b>, cómo trabajan y fotos de eventos reales.</span></li>
+        <li><span>Un formulario que arma la <b>consulta por WhatsApp</b> con fecha, invitados y zona.</span></li>
+      </ul>
+      <div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--wheat);margin-bottom:14px">Más ideas para sumar</div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Menú corporativo</span>
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Pago a ayudantes</span>
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Checklist del día</span>
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Encuesta post evento</span>
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Condiciones y cancelación</span>
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Ahumados para llevar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 · ESCALABLE -->
+<section class="slide dark" id="s15">
+  <div class="meta"><span>Para crecer</span><span class="n">15 / 16</span></div>
+  <h2>Listo para hacer más eventos por mes.</h2>
+  <p class="lead">Cuando lleguen dos eventos el mismo día, la app ya reparte el trabajo.</p>
+  <div class="grow" style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;align-content:start">
+    <div class="win" style="padding:24px;display:grid;gap:8px"><span class="lbl">Equipo</span><b style="font-size:28px">Ayudantes por evento</b><span style="font-size:19px;color:var(--muted);font-weight:600;line-height:1.4">A quién convocaste, cuánto le pagás y si ya cobró.</span></div>
+    <div class="win" style="padding:24px;display:grid;gap:8px"><span class="lbl">Equipamiento</span><b style="font-size:28px">Qué parrilla va a dónde</b><span style="font-size:19px;color:var(--muted);font-weight:600;line-height:1.4">Parrillas, fogoneros y vajilla reservados por fecha, sin pisarse.</span></div>
+    <div class="win" style="padding:24px;display:grid;gap:8px"><span class="lbl">Ventas</span><b style="font-size:28px">Consultas que no cerraron</b><span style="font-size:19px;color:var(--muted);font-weight:600;line-height:1.4">Un recordatorio a los 3 días para volver a escribir.</span></div>
+    <div class="win" style="padding:24px;display:grid;gap:8px"><span class="lbl">Recompra</span><b style="font-size:28px">Ahumados para llevar</b><span style="font-size:19px;color:var(--muted);font-weight:600;line-height:1.4">Pedidos chicos entre eventos para que la parrilla nunca esté parada.</span></div>
+  </div>
+  <div style="position:relative;height:300px;border-radius:24px;overflow:hidden">
+    <div class="photo" style="background-image:url(../assets/duo.jpg);background-position:center 30%"></div>
+    <div class="photo" style="background:linear-gradient(0deg,rgba(23,21,19,.85),rgba(23,21,19,.1))"></div>
+    <p class="hand" style="position:absolute;left:28px;bottom:18px;margin:0;font-size:46px;color:var(--cream)">El fuego lo ponen ustedes. El orden, la app.</p>
+  </div>
+</section>
+
+<!-- 16 · PLAN -->
+<section class="slide dark" id="s16">
+  <div class="meta"><span class="brand"><img src="../assets/logo-180.png" alt="" style="border-radius:50%">Cómo lo armamos</span><span class="n">16 / 16</span></div>
+  <h2 style="font-size:96px">Por etapas, empezando por lo que más ayuda.</h2>
+  <style>
+    .road { list-style: none; margin: 0; padding: 0; display: grid; }
+    .road li { display: grid; grid-template-columns: 70px 1fr; gap: 24px; position: relative; padding-bottom: 30px; }
+    .road li::before { content: ""; position: absolute; left: 34px; top: 66px; bottom: 0; width: 2px; background: var(--wheat); opacity: .5; }
+    .road li:last-child::before { display: none; }
+    .road .k { width: 70px; height: 70px; border-radius: 50%; background: var(--cream); color: var(--ink); display: grid; place-items: center; font-family: var(--f-d); font-size: 34px; font-weight: 700; }
+    .road b { font-size: 31px; display: block; color: var(--cream); }
+    .road small { font-size: 22px; color: var(--cream-2); line-height: 1.35; display: block; margin-top: 4px; }
+    .road em { font-style: normal; color: var(--wheat); font-weight: 800; font-size: 19px; letter-spacing: .08em; text-transform: uppercase; }
+  </style>
+  <ol class="road">
+    <li><span class="k">1</span><div><em>Semana 1</em><b>Calculadora, presupuestos en PDF y margen</b><small>Desde la próxima consulta, el presupuesto sale en minutos.</small></div></li>
+    <li><span class="k">2</span><div><em>Semanas 2 y 3</em><b>Calendario, señas, compras y la web</b><small>Fechas en el celu, cobros al día y una página propia en la bio.</small></div></li>
+    <li><span class="k">3</span><div><em>Semana 4</em><b>Historial, clientes, métricas y contenido</b><small>Lo que aprendés en cada evento queda guardado.</small></div></li>
+    <li><span class="k">4</span><div><em>Después</em><b>Bot de WhatsApp y Meta Ads</b><small>Cotiza solo y salimos a buscar más eventos.</small></div></li>
+  </ol>
+  <div style="margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:30px">
+    <div>
+      <p class="hand" style="font-size:72px;color:var(--wheat);margin:0;line-height:1">¿Lo probamos un mes?</p>
+      <p style="font-size:24px;color:var(--cream-2);margin:10px 0 0;max-width:24em">Con los eventos reales de Vuelta y Vuelta, y si no suma, no sigue.</p>
+    </div>
+    <img src="../assets/logo.png" alt="" style="width:170px;height:170px;border-radius:50%">
+  </div>
+</section>
+
+<script>
+(function () {
+  // Precio del vacío por kg (miles de $), 8 semanas
+  const p = [12.5, 12.6, 12.9, 13.1, 13.2, 13.6, 13.8, 14.0];
+  const svg = document.getElementById('pchart');
+  const W = 440, H = 300, L = 46, B = 34, T = 20, R = 16, min = 12, max = 14.5;
+  const x = (i) => L + i * ((W - L - R) / (p.length - 1));
+  const y = (v) => H - B - ((v - min) / (max - min)) * (H - B - T);
+  let o = '';
+  [12, 13, 14].forEach((v) => { o += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#E2D9C8" stroke-width="2"/><text x="${L - 8}" y="${y(v) + 5}" text-anchor="end" font-family="Manrope" font-weight="700" font-size="14" fill="#6E665B">${v}k</text>`; });
+  const pts = p.map((v, i) => `${x(i)},${y(v)}`).join(' ');
+  o += `<polygon points="${L},${H - B} ${pts} ${x(p.length - 1)},${H - B}" fill="#C4521F" opacity=".12"/>`;
+  o += `<polyline points="${pts}" fill="none" stroke="#C4521F" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`;
+  o += `<circle cx="${x(p.length - 1)}" cy="${y(14)}" r="7" fill="#C4521F"/><text x="${x(p.length - 1) - 10}" y="${y(14) - 14}" text-anchor="end" font-family="Manrope" font-weight="800" font-size="16" fill="#1B1916">$14.000/kg</text>`;
+  ['ago', 'sep', 'oct'].forEach((m, k) => { o += `<text x="${x(k * 3.5)}" y="${H - 8}" text-anchor="middle" font-family="Manrope" font-weight="700" font-size="14" fill="#6E665B">${m}</text>`; });
+  svg.innerHTML = o;
+  // Eventos por mes 2026
+  const ev = [1, 1, 2, 3, 4, 2, 2, 3, 5, 6, 9, 0];
+  const lab = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const m = document.getElementById('mchart');
+  const W2 = 880, H2 = 150, B2 = 26, T2 = 22, bw = 46, step = W2 / 12;
+  let q = '';
+  ev.forEach((v, i) => {
+    const h = (v / 9) * (H2 - B2 - T2), xx = i * step + (step - bw) / 2;
+    const fut = i >= 10;
+    q += `<rect x="${xx}" y="${H2 - B2 - h}" width="${bw}" height="${Math.max(h, 2)}" rx="8" fill="${fut ? '#E8743B' : '#CFC4B2'}" ${fut ? 'opacity=".85"' : ''}/>`;
+    q += `<text x="${xx + bw / 2}" y="${H2 - 6}" text-anchor="middle" font-family="Manrope" font-weight="700" font-size="14" fill="#6E665B">${lab[i]}</text>`;
+    if (v) q += `<text x="${xx + bw / 2}" y="${H2 - B2 - h - 6}" text-anchor="middle" font-family="Manrope" font-weight="800" font-size="14" fill="#1B1916">${v}</text>`;
+  });
+  m.innerHTML = q;
+})();
+</script>
