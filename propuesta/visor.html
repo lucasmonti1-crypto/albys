@@ -1,60 +1,76 @@
 <title>Propuesta App Alby's</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Manrope:wght@500;700;800&display=swap">
 <style>
-/* Layout: una columna, el carrusel como protagonista y el video debajo. */
+/* Layout: el carrusel ocupa todo el ancho; 2 placas a la vez en pantallas anchas, 1 en el celular. */
 :root { --bg: #F6F2E4; --fg: #25271B; --muted: #6A6852; --accent: #464C28; --card: #FFFDF5; --line: #DDD5BA; --btn-fg: #F3EFD8;
-  --f-d: "Young Serif", Georgia, serif; --f-b: "Manrope", system-ui, sans-serif; }
+  --f-d: "Young Serif", Georgia, serif; --f-b: "Manrope", system-ui, sans-serif; --gap: 18px; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #16180F; --fg: #EEEAD6; --muted: #B0AE92; --accent: #C7CB8C; --card: #1F2216; --line: #363A28; --btn-fg: #1A1D10; color-scheme: dark; } }
 :root[data-theme="dark"] { --bg: #16180F; --fg: #EEEAD6; --muted: #B0AE92; --accent: #C7CB8C; --card: #1F2216; --line: #363A28; --btn-fg: #1A1D10; color-scheme: dark; }
-body { background: var(--bg); color: var(--fg); font-family: var(--f-b); margin: 0; }
-main { max-width: 620px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 64px; display: grid; gap: 22px; }
-h1 { font-family: var(--f-d); font-weight: 400; font-size: clamp(30px, 7vw, 44px); line-height: 1.05; margin: 0; color: var(--accent); text-wrap: balance; }
-p { margin: 0; color: var(--muted); line-height: 1.5; }
-.track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; border-radius: 18px; scrollbar-width: none; background: var(--card); border: 1px solid var(--line); }
+html, body { background: var(--bg); }
+body { color: var(--fg); font-family: var(--f-b); margin: 0; padding-inline: 16px; padding-block: 28px 48px; }
+main { width: 100%; max-width: min(1320px, calc((100vh - 250px) * 1.6 + var(--gap))); min-width: 0; margin: 0 auto; display: grid; gap: 18px; }
+header { display: flex; justify-content: space-between; align-items: end; gap: 12px 24px; flex-wrap: wrap; }
+h1 { font-family: var(--f-d); font-weight: 400; font-size: clamp(28px, 4.4vw, 46px); line-height: 1.05; margin: 0; color: var(--accent); text-wrap: balance; }
+header p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; max-width: 44em; }
+.track { display: flex; gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .track::-webkit-scrollbar { display: none; }
-.track img { flex: 0 0 100%; width: 100%; aspect-ratio: 4 / 5; scroll-snap-align: center; object-fit: cover; }
-.ctrl { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.ctrl button { width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--accent); color: var(--btn-fg); font-size: 22px; cursor: pointer; }
-.ctrl button:disabled { opacity: .35; cursor: default; }
+.track:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 16px; }
+.track img { flex: 0 0 calc((100% - var(--gap)) / 2); width: calc((100% - var(--gap)) / 2); aspect-ratio: 4 / 5; scroll-snap-align: start; object-fit: cover; border-radius: 16px; border: 1px solid var(--line); background: var(--card); }
+@media (max-width: 720px) {
+  :root { --gap: 12px; }
+  main { max-width: 100%; }
+  .track img { flex-basis: 100%; width: 100%; border-radius: 14px; }
+  .dots { gap: 5px; } .dots button { width: 8px; height: 8px; }
+  .ctrl { gap: 12px; } .ctrl button { width: 46px; height: 46px; }
+}
+.ctrl { display: flex; align-items: center; justify-content: center; gap: 18px; }
+.ctrl button { width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--accent); color: var(--btn-fg); font: 700 22px/1 var(--f-b); cursor: pointer; flex: none; }
+.ctrl button:disabled { opacity: .3; cursor: default; }
 .ctrl button:focus-visible { outline: 3px solid var(--muted); outline-offset: 3px; }
-.dots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
-.dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
-.dots i.on { background: var(--accent); }
-.count { font-weight: 800; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; text-align: center; margin-top: 6px; }
-h2 { font-family: var(--f-d); font-weight: 400; font-size: 26px; margin: 18px 0 0; color: var(--accent); }
-video { width: 100%; max-width: 100%; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
+.mid { min-width: 0; display: grid; gap: 8px; justify-items: center; }
+.dots { display: flex; gap: 7px; flex-wrap: wrap; justify-content: center; }
+.dots button { width: 10px; height: 10px; padding: 0; border-radius: 50%; border: 0; background: var(--line); cursor: pointer; }
+.dots button.on { background: var(--accent); }
+.count { font-weight: 800; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; }
 </style>
 <main>
-  <h1>La app de Alby’s</h1>
-  <p>Carrusel de 14 placas con la propuesta: pedidos en vivo, producción, rutas por repartidor, cobros, clientes, bot de WhatsApp y web.</p>
+  <header>
+    <div>
+      <h1>La app de Alby’s</h1>
+      <p>Pedidos en vivo, producción, rutas por repartidor, cobros, clientes, métricas, bot de WhatsApp y web. Deslizá para ver las 15 placas.</p>
+    </div>
+  </header>
   <div class="track" id="track" tabindex="0" aria-label="Placas de la propuesta"></div>
   <div class="ctrl">
     <button type="button" id="prev" aria-label="Placa anterior">←</button>
-    <div><div class="dots" id="dots"></div><div class="count" id="count">1 / 14</div></div>
+    <div class="mid"><div class="dots" id="dots"></div><div class="count" id="count"></div></div>
     <button type="button" id="next" aria-label="Placa siguiente">→</button>
   </div>
-  <h2>En video</h2>
-  <video src="albys-propuesta.mp4" controls muted playsinline preload="metadata" poster="png/01.png"></video>
 </main>
 <script>
-const N = 14, track = document.getElementById('track'), dots = document.getElementById('dots');
+const N = 15, track = document.getElementById('track'), dots = document.getElementById('dots');
 for (let i = 1; i <= N; i++) {
   const n = String(i).padStart(2, '0');
-  track.insertAdjacentHTML('beforeend', `<img src="png/${n}.png" alt="Placa ${i} de ${N}" ${i > 2 ? 'loading="lazy"' : ''}>`);
-  dots.insertAdjacentHTML('beforeend', '<i></i>');
+  track.insertAdjacentHTML('beforeend', `<img src="png/${n}.png" alt="Placa ${i} de ${N}" ${i > 3 ? 'loading="lazy"' : ''}>`);
+  dots.insertAdjacentHTML('beforeend', `<button type="button" aria-label="Ir a la placa ${i}"></button>`);
 }
-const idx = () => Math.round(track.scrollLeft / track.clientWidth);
+const step = () => { const a = track.children[0], b = track.children[1]; return b.offsetLeft - a.offsetLeft; };
+const perView = () => Math.max(1, Math.round((track.clientWidth + 1) / step()));
+const idx = () => Math.round(track.scrollLeft / step());
+const smooth = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+const goTo = (i) => track.scrollTo({ left: Math.max(0, Math.min(N - perView(), i)) * step(), behavior: smooth() });
 function sync() {
-  const i = idx();
-  document.getElementById('count').textContent = `${i + 1} / ${N}`;
-  [...dots.children].forEach((d, k) => d.classList.toggle('on', k === i));
-  document.getElementById('prev').disabled = i === 0;
-  document.getElementById('next').disabled = i === N - 1;
+  const i = idx(), k = perView(), last = Math.min(N, i + k);
+  document.getElementById('count').textContent = k > 1 ? `${i + 1}–${last} de ${N}` : `${i + 1} de ${N}`;
+  [...dots.children].forEach((d, j) => d.classList.toggle('on', j >= i && j < last));
+  document.getElementById('prev').disabled = i <= 0;
+  document.getElementById('next').disabled = i >= N - k;
 }
-const go = (d) => track.scrollTo({ left: (idx() + d) * track.clientWidth, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-document.getElementById('prev').onclick = () => go(-1);
-document.getElementById('next').onclick = () => go(1);
-track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') go(1); if (e.key === 'ArrowLeft') go(-1); });
-track.addEventListener('scroll', () => requestAnimationFrame(sync));
+document.getElementById('prev').onclick = () => goTo(idx() - 1);
+document.getElementById('next').onclick = () => goTo(idx() + 1);
+[...dots.children].forEach((d, j) => d.onclick = () => goTo(j));
+track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); goTo(idx() + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(idx() - 1); } });
+track.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+addEventListener('resize', sync);
 sync();
 </script>

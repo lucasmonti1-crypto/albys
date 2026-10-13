@@ -6,14 +6,14 @@ Material para presentarle a Alby’s (granola, Pituquis, frutos secos, miel y hu
 
 | Carpeta | Qué es |
 |---|---|
-| `propuesta/png/` | Carrusel de 14 placas 1080×1350 (formato Instagram 4:5), listas para mandar por WhatsApp o subir. |
-| `propuesta/albys-propuesta.mp4` | Las mismas 14 placas en video (51 s, con fundidos). |
+| `propuesta/png/` | Carrusel de 15 placas 1080×1350 (formato Instagram 4:5), listas para mandar por WhatsApp o subir. |
+| `propuesta/albys-propuesta.mp4` | Las mismas 15 placas en video (con fundidos). |
 | `propuesta/slides.html` | La fuente de las placas (HTML/CSS). Editás textos acá y volvés a renderizar. |
 | `propuesta/visor.html` | Visor del carrusel + video. |
 | `landing/` | Landing de Alby’s: catálogo con precios, carrito y pedido que se manda por WhatsApp ya escrito. HTML estático, sin build. |
 | `assets/` | Logo y fotos de producto recortadas de los flyers de Instagram. |
 
-## Las 14 placas
+## Las 15 placas
 
 1. Portada: “La app de Alby’s”
 2. Cómo es un jueves hoy (WhatsApp, cobros, ruta a ojo, cuánto preparar)
@@ -26,9 +26,20 @@ Material para presentarle a Alby’s (granola, Pituquis, frutos secos, miel y hu
 9. Cobros: quién pagó y quién no, recordatorio con un toque
 10. CRM: clientes fieles, nuevos y dormidos, mensajes masivos
 11. Bot de WhatsApp que toma pedidos (etapa siguiente)
-12. Números del negocio
-13. La web para el link de la bio + ideas extra
-14. Plan por etapas y cierre
+12. Números del negocio (ventas por semana)
+13. Métricas para decidir: productos, zonas y mejores clientes, con conclusiones
+14. La web para el link de la bio + ideas extra
+15. Plan por etapas y cierre
+
+## Lógica de la página de métricas
+
+Todo sale de las filas del Excel (pestañas Pedidos + Items + Clientes + Productos). Cada ítem vendido es una fila con fecha, cliente, zona, producto, cantidad, precio y estado de pago; la app filtra por período (últimas 8 semanas, este mes, todo) y agrupa:
+
+- **Productos**: plata vendida, unidades y % del total. Con el costo por receta cargado en Productos, calcula el margen: `(precio − costo) / precio`. Así se ve qué vende más y qué deja más.
+- **Zonas**: plata, cantidad de pedidos, % del total y ticket promedio (`plata / pedidos`). Sirve para decidir días de entrega, pedido mínimo o costo de envío.
+- **Clientes**: ranking por plata en el período, en cuántas de las semanas compró (frecuencia), hace cuánto no pide y si debe algo. Etiquetas automáticas: *Fiel* (compró en 6+ de las últimas 8 semanas), *Bajó* (frecuencia cayó o no pide hace 2+ semanas cuando solía pedir todas), *Dormido* (3+ semanas sin pedir), *Nuevo* (primer pedido en el período).
+- **Comparación**: cada número contra el período anterior del mismo largo (+18%, etc.).
+- **Conclusiones automáticas** (reglas simples, sin IA): zona con más del 35% de las ventas → sugerir otro día de entrega; producto con margen bajo pero mucho volumen → revisar precio o usarlo de gancho; zona con ticket promedio por debajo del general → sugerir pedido mínimo; pocos clientes que suman mucho → cuidarlos.
 
 Los nombres de clientes, montos y métricas de las placas son de ejemplo. Los productos y precios salen del flyer real de Alby’s.
 
