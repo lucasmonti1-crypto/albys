@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Albys Productos Naturales</title>
+<meta name="description" content="Granola casera, Pituquis, frutos secos, miel y huevos de campo. Emprendimiento familiar. Pedidos por WhatsApp y entregas los jueves en zona norte.">
+<link rel="icon" href="img/logo-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap">
+<style>
+/* Layout: almacén de barrio — la página es una lista de precios semanal y el carrito es la comanda que se manda por WhatsApp. */
+:root {
+  --paper: #F6F2E4;
+  --card: #FFFDF5;
+  --sunk: #EFE9D4;
+  --olive: #464C28;
+  --olive-soft: #5E6636;
+  --wheat: #A6A568;
+  --honey: #A8711F;
+  --ink: #25271B;
+  --muted: #66654F;
+  --line: #E0D9C1;
+  --btn-bg: #464C28;
+  --btn-fg: #F6F2E4;
+  --wa: #1D8048;
+  --wa-fg: #FFFFFF;
+  --hero-bg: #464C28;
+  --hero-fg: #F3EFD8;
+  --hero-muted: #CFCDA4;
+  --shadow: 0 1px 0 rgba(70,76,40,.06), 0 10px 30px -18px rgba(70,76,40,.45);
+
+  --f-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-hand: "Caveat", "Comic Sans MS", cursive;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #16180F; --card: #1F2216; --sunk: #272B1C; --olive: #C7CB8C; --olive-soft: #AEB273;
+    --wheat: #8F8E57; --honey: #E0A64A; --ink: #EEEAD6; --muted: #B0AE92;
+    --line: #363A28; --btn-bg: #C7CB8C; --btn-fg: #1A1D10; --wa: #2FA866; --wa-fg: #0E1A11;
+    --hero-bg: #2B3018; --hero-fg: #F3EFD8; --hero-muted: #BFBD95;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 12px 30px -16px rgba(0,0,0,.7);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #16180F; --card: #1F2216; --sunk: #272B1C; --olive: #C7CB8C; --olive-soft: #AEB273;
+  --wheat: #8F8E57; --honey: #E0A64A; --ink: #EEEAD6; --muted: #B0AE92;
+  --line: #363A28; --btn-bg: #C7CB8C; --btn-fg: #1A1D10; --wa: #2FA866; --wa-fg: #0E1A11;
+  --hero-bg: #2B3018; --hero-fg: #F3EFD8; --hero-muted: #BFBD95;
+  --shadow: 0 1px 0 rgba(0,0,0,.3), 0 12px 30px -16px rgba(0,0,0,.7);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--honey); outline-offset: 2px; border-radius: 6px; }
+.wrap { width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: 20px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; line-height: 1.08; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--honey); }
+.hand { font-family: var(--f-hand); font-weight: 700; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 0; font: 700 15px/1 var(--f-body); text-decoration: none; cursor: pointer; transition: transform .15s ease, filter .15s ease; }
+.btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.btn-main { background: var(--btn-bg); color: var(--btn-fg); }
+.btn-wa { background: var(--wa); color: var(--wa-fg); }
+.btn-ghost { background: transparent; color: var(--hero-fg); box-shadow: inset 0 0 0 1.5px var(--hero-muted); }
+.btn svg { width: 20px; height: 20px; flex: none; }
+
+/* Header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand img { width: 40px; height: 40px; }
+.brand b { font-family: var(--f-display); font-weight: 400; font-size: 22px; color: var(--olive); }
+.nav { display: flex; gap: 22px; align-items: center; }
+.nav a { text-decoration: none; font-weight: 600; font-size: 14px; color: var(--muted); }
+.nav a:hover { color: var(--ink); }
+.nav .btn { min-height: 40px; padding: 0 16px; font-size: 14px; color: var(--wa-fg); }
+@media (max-width: 720px) { .nav a:not(.btn) { display: none; } }
+
+/* Hero */
+.hero { background: var(--hero-bg); color: var(--hero-fg); position: relative; overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; padding-block: 64px 72px; }
+.hero h1 { font-size: clamp(42px, 6.4vw, 78px); }
+.hero h1 .hand { display: block; font-size: .78em; color: var(--hero-muted); margin-top: 6px; letter-spacing: 0; }
+.hero p.lead { font-size: 18px; max-width: 34em; color: var(--hero-muted); margin: 22px 0 30px; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero .eyebrow { color: var(--wheat); }
+.seal { position: relative; aspect-ratio: 1; max-width: 420px; width: 100%; justify-self: center; }
+.seal > img.logo { width: 78%; margin: 11%; border-radius: 50%; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
+.seal .chip { position: absolute; width: 30%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 5px solid var(--hero-bg); background: #F4EFE2; }
+.seal .chip img { width: 100%; height: 100%; object-fit: cover; }
+.seal .c1 { top: -2%; right: 0; } .seal .c2 { bottom: 2%; right: -4%; } .seal .c3 { bottom: -4%; left: 4%; }
+.wheat-bg { position: absolute; inset: 0; opacity: .07; pointer-events: none; background-image: radial-gradient(var(--hero-fg) 1px, transparent 1.4px); background-size: 22px 22px; }
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: 1fr; padding-block: 44px 56px; }
+  .seal { max-width: 300px; order: -1; }
+}
+
+/* Facts strip */
+.facts { border-bottom: 1px solid var(--line); background: var(--card); }
+.facts ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
+.facts li { padding: 18px 16px; display: flex; gap: 12px; align-items: center; border-right: 1px solid var(--line); min-width: 0; }
+.facts li:last-child { border-right: 0; }
+.facts svg { width: 26px; height: 26px; color: var(--olive); flex: none; }
+.facts b { display: block; font-size: 14px; } .facts span { font-size: 13px; color: var(--muted); }
+@media (max-width: 860px) { .facts ul { grid-template-columns: 1fr 1fr; } .facts li:nth-child(2) { border-right: 0; } .facts li:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+
+section.block { padding-block: 72px; }
+.head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
+.head h2 { font-size: clamp(32px, 4.4vw, 48px); color: var(--olive); }
+.head p { max-width: 30em; color: var(--muted); margin: 8px 0 0; }
+
+/* Catalog */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 18px; }
+.prod { background: var(--card); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow); min-width: 0; }
+.prod .ph { background: #F4EFE2; aspect-ratio: 16 / 10; display: grid; place-items: center; overflow: hidden; }
+.prod .ph img { height: 100%; width: 100%; object-fit: cover; }
+.prod .bd { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.prod h3 { font-size: 24px; color: var(--ink); }
+.prod .desc { font-size: 14px; color: var(--muted); margin: -6px 0 0; }
+.vars { display: flex; flex-wrap: wrap; gap: 8px; }
+.vars label { position: relative; }
+.vars input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.vars span { display: inline-flex; flex-direction: column; padding: 8px 12px; border-radius: 12px; border: 1.5px solid var(--line); font-size: 13px; font-weight: 700; line-height: 1.2; cursor: pointer; background: var(--paper); }
+.vars span small { font-weight: 600; color: var(--muted); font-size: 12px; }
+.vars input:checked + span { border-color: var(--olive); background: var(--sunk); box-shadow: inset 0 0 0 1px var(--olive); }
+.vars input:focus-visible + span { outline: 3px solid var(--honey); outline-offset: 2px; }
+.buy { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; border-top: 1px dashed var(--line); }
+.price { font-family: var(--f-display); font-size: 26px; color: var(--olive); }
+.step { display: inline-flex; align-items: center; border: 1.5px solid var(--line); border-radius: 999px; overflow: hidden; }
+.step button { width: 40px; height: 40px; border: 0; background: transparent; color: var(--ink); font: 700 20px/1 var(--f-body); cursor: pointer; }
+.step button:hover { background: var(--sunk); }
+.step output { min-width: 28px; text-align: center; font-weight: 800; }
+.add { min-height: 42px; padding: 0 16px; font-size: 14px; }
+.in-cart { font-size: 12px; font-weight: 700; color: var(--wa); min-height: 18px; }
+
+/* How */
+.how { background: var(--sunk); }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: s; }
+.steps li { background: var(--card); border-radius: 22px; padding: 24px; border: 1px solid var(--line); counter-increment: s; min-width: 0; }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--btn-bg); color: var(--btn-fg); font-family: var(--f-display); font-size: 20px; margin-bottom: 14px; }
+.steps h3 { font-size: 22px; margin-bottom: 6px; }
+.steps p { margin: 0; color: var(--muted); font-size: 15px; }
+@media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+
+/* Order */
+.order { display: grid; grid-template-columns: 1.05fr .95fr; gap: 24px; align-items: start; }
+@media (max-width: 860px) { .order { grid-template-columns: 1fr; } }
+.ticket { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 24px; box-shadow: var(--shadow); min-width: 0; position: relative; }
+.ticket h3 { font-size: 26px; color: var(--olive); }
+.ticket .sub { color: var(--muted); font-size: 14px; margin: 4px 0 16px; }
+.lines { list-style: none; margin: 0; padding: 0; }
+.lines li { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px dashed var(--line); font-size: 15px; }
+.lines li .q { font-weight: 800; color: var(--olive); }
+.lines li .x { width: 30px; height: 30px; border-radius: 50%; border: 0; background: var(--sunk); color: var(--muted); cursor: pointer; font-size: 16px; }
+.empty { color: var(--muted); font-size: 15px; padding: 18px 0; }
+.total { display: flex; justify-content: space-between; align-items: baseline; padding-top: 16px; }
+.total b { font-family: var(--f-display); font-weight: 400; font-size: 34px; color: var(--olive); }
+.gift { margin-top: 16px; padding: 12px 14px; border-radius: 14px; background: var(--sunk); font-size: 14px; display: flex; gap: 10px; align-items: center; }
+.gift svg { width: 22px; height: 22px; color: var(--honey); flex: none; }
+form.f { display: grid; gap: 14px; }
+.f .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 520px) { .f .row { grid-template-columns: 1fr; } }
+.f label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; color: var(--muted); min-width: 0; }
+.f input, .f select, .f textarea { width: 100%; font: 500 15px var(--f-body); color: var(--ink); background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.f textarea { min-height: 72px; resize: vertical; }
+.f input:focus, .f select:focus, .f textarea:focus { outline: none; border-color: var(--olive); }
+.f .btn-wa { width: 100%; min-height: 54px; font-size: 16px; }
+.f .btn-wa[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.note { font-size: 13px; color: var(--muted); margin: 0; }
+.phone { font-weight: 800; color: var(--ink); user-select: all; }
+
+/* Zones + about */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 860px) { .duo { grid-template-columns: 1fr; } }
+.panel { border-radius: 22px; padding: 28px; border: 1px solid var(--line); background: var(--card); min-width: 0; }
+.panel h3 { font-size: 28px; color: var(--olive); margin-bottom: 10px; }
+.panel p { color: var(--muted); margin: 0 0 14px; }
+.zones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.zones span { padding: 8px 14px; border-radius: 999px; background: var(--sunk); font-weight: 700; font-size: 14px; }
+.panel.dark { background: var(--hero-bg); color: var(--hero-fg); border-color: transparent; }
+.panel.dark h3 { color: var(--hero-fg); }
+.panel.dark p { color: var(--hero-muted); }
+.panel.dark .hand { font-size: 30px; color: var(--wheat); display: block; margin-top: 8px; }
+
+/* FAQ */
+.faq { display: grid; gap: 10px; max-width: 820px; }
+.faq details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 4px 20px; }
+.faq summary { cursor: pointer; font-weight: 700; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::after { content: "+"; font-size: 22px; line-height: 1; color: var(--olive); }
+.faq details[open] summary::after { content: "–"; }
+.faq p { margin: 0 0 16px; color: var(--muted); }
+
+footer { background: var(--hero-bg); color: var(--hero-muted); padding-block: 40px 110px; font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: center; }
+footer a { color: var(--hero-fg); font-weight: 700; text-decoration: none; }
+footer .brand b { color: var(--hero-fg); }
+footer .links { display: flex; gap: 20px; flex-wrap: wrap; }
+
+/* Sticky cart bar */
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(10px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .25s ease; }
+.bar.on { transform: none; }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-inline: 4px; }
+.bar .sum { font-weight: 700; font-size: 14px; color: var(--muted); }
+.bar .sum b { display: block; font-family: var(--f-display); font-weight: 400; font-size: 22px; color: var(--olive); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><img src="img/logo-180.png" alt="" width="40" height="40"><b>Alby’s</b></a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#productos">Productos</a>
+      <a href="#como">Cómo pedir</a>
+      <a href="#zonas">Zonas</a>
+      <a class="btn btn-wa" href="https://wa.me/5491125694531" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="wheat-bg" aria-hidden="true"></div>
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Emprendimiento familiar · Zona norte</p>
+        <h1>Lo natural,<span class="hand">directo a tu casa.</span></h1>
+        <p class="lead">Granola casera, Pituquis, frutos secos, miel y huevos de campo. Tomamos pedidos toda la semana y los entregamos los jueves en San Isidro, Nordelta y alrededores.</p>
+        <div class="ctas">
+          <a class="btn btn-main" href="#productos" style="background:var(--hero-fg);color:var(--hero-bg)">Armá tu pedido</a>
+          <a class="btn btn-ghost" href="https://wa.me/5491125694531" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+        </div>
+      </div>
+      <div class="seal" aria-hidden="true">
+        <img class="logo" src="img/logo.png" alt="">
+        <div class="chip c1"><img src="img/p-granola.jpg" alt=""></div>
+        <div class="chip c2"><img src="img/p-pituquis.jpg" alt=""></div>
+        <div class="chip c3"><img src="img/p-huevos.jpg" alt=""></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="facts">
+    <ul class="wrap">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><div><b>Entregas los jueves</b><span>Pedí durante la semana</span></div></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div><b>Zona norte</b><span>San Isidro · Nordelta</span></div></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 3 4 6 0 10-4-4-3-7 0-10zM12 13v8M7 9c-2 2-2 5 1 7M17 9c2 2 2 5-1 7"/></svg><div><b>Hecho en casa</b><span>Recetas simples y ricas</span></div></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3.6-7.2L21 4v5h-5"/></svg><div><b>Pedidos por WhatsApp</b><span>+54 9 11 2569 4531</span></div></li>
+    </ul>
+  </div>
+
+  <section class="block" id="productos">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="eyebrow">Lista de precios</p>
+          <h2>Nuestros productos</h2>
+        </div>
+        <p>Elegí tamaño y cantidad, sumalo al pedido y al final lo mandás armado por WhatsApp. Sin registrarte.</p>
+      </div>
+      <div class="grid" id="catalog"></div>
+    </div>
+  </section>
+
+  <section class="block how" id="como">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="eyebrow">Así de simple</p>
+          <h2>Cómo pedir</h2>
+        </div>
+      </div>
+      <ol class="steps">
+        <li><h3>Armá el pedido</h3><p>Sumá lo que quieras desde la lista. El total se calcula solo.</p></li>
+        <li><h3>Mandalo por WhatsApp</h3><p>Completás tu nombre y dirección y se abre el chat con el pedido ya escrito.</p></li>
+        <li><h3>Recibilo el jueves</h3><p>Te confirmamos el horario y te lo llevamos a tu casa.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="pedido">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="eyebrow">Tu comanda</p>
+          <h2>Tu pedido</h2>
+        </div>
+      </div>
+      <div class="order">
+        <div class="ticket">
+          <h3>Pedido para el jueves</h3>
+          <p class="sub" id="deliveryDate">Entrega el próximo jueves</p>
+          <ul class="lines" id="lines"></ul>
+          <div class="total"><span>Total</span><b class="num" id="total">$0</b></div>
+          <div class="gift"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18M12 8c-2-4-6-4-6-1.5S9 8 12 8zm0 0c2-4 6-4 6-1.5S15 8 12 8z"/></svg><span>¿Es tu primera compra? Avisanos y te sumamos un regalo.</span></div>
+        </div>
+        <form class="ticket f" id="orderForm" novalidate>
+          <div class="row">
+            <label for="nombre">Nombre<input id="nombre" name="nombre" autocomplete="name" placeholder="Sofía Ferrari"></label>
+            <label for="zona">Zona
+              <select id="zona" name="zona">
+                <option>San Isidro</option><option>Nordelta</option><option>Beccar</option><option>Martínez</option><option>Tigre</option><option>Vicente López</option><option>Otra (consultar)</option>
+              </select>
+            </label>
+          </div>
+          <label for="direccion">Dirección<input id="direccion" name="direccion" autocomplete="street-address" placeholder="Calle, número, barrio / lote"></label>
+          <div class="row">
+            <label for="pago">Forma de pago
+              <select id="pago" name="pago"><option>Transferencia</option><option>Efectivo</option></select>
+            </label>
+            <label for="primera">¿Primera compra?
+              <select id="primera" name="primera"><option>No</option><option>Sí</option></select>
+            </label>
+          </div>
+          <label for="notas">Notas (opcional)<textarea id="notas" name="notas" placeholder="Timbre, horario, portería…"></textarea></label>
+          <a class="btn btn-wa" id="send" href="https://wa.me/5491125694531" target="_blank" rel="noopener" aria-disabled="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.1-1.2-.2-.1-.4-.2z"/></svg>
+            Enviar pedido por WhatsApp
+          </a>
+          <p class="note" id="sendNote">Sumá al menos un producto para enviar el pedido.</p>
+          <p class="note">Si el chat no se abre, escribinos al <span class="phone">+54 9 11 2569 4531</span>.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="zonas" style="padding-top:0">
+    <div class="wrap duo">
+      <div class="panel">
+        <p class="eyebrow">Dónde llegamos</p>
+        <h3>Entregas en zona norte</h3>
+        <p>Armamos el recorrido todos los jueves. Si tu barrio no está en la lista, escribinos y vemos cómo hacerte llegar el pedido.</p>
+        <div class="zones"><span>San Isidro</span><span>Nordelta</span><span>Beccar</span><span>Martínez</span><span>Tigre</span><span>Vicente López</span></div>
+      </div>
+      <div class="panel dark">
+        <p class="eyebrow">Nosotros</p>
+        <h3>Un emprendimiento familiar</h3>
+        <p>Hacemos productos simples, ricos y pensados para acompañarte todos los días. Gracias a todos los que eligen Alby’s semana a semana y bancan este proyecto.</p>
+        <span class="hand">Hecho con dedicación.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block how" id="faq">
+    <div class="wrap">
+      <div class="head"><div><p class="eyebrow">Dudas</p><h2>Preguntas frecuentes</h2></div></div>
+      <div class="faq">
+        <details open><summary>¿Cuándo entregan?</summary><p>Tomamos pedidos durante toda la semana y entregamos los jueves. Te confirmamos el horario aproximado por WhatsApp.</p></details>
+        <details><summary>¿Cómo pago?</summary><p>Por transferencia o en efectivo al recibir. Elegís la opción en el pedido.</p></details>
+        <details><summary>¿Llegan a mi barrio?</summary><p>Repartimos en zona norte: San Isidro, Nordelta y alrededores. Si no ves tu zona, consultanos.</p></details>
+        <details><summary>¿Puedo repetir el pedido todas las semanas?</summary><p>Sí. Escribinos y te lo dejamos agendado para cada jueves.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#inicio"><img src="img/logo-180.png" alt="" width="40" height="40"><b>Alby’s · Productos naturales</b></a>
+    <div class="links">
+      <a href="https://www.instagram.com/albys.ar/" target="_blank" rel="noopener">Instagram @albys.ar</a>
+      <a href="https://wa.me/5491125694531" target="_blank" rel="noopener">WhatsApp +54 9 11 2569 4531</a>
+    </div>
+  </div>
+</footer>
+
+<div class="bar" id="bar" aria-live="polite">
+  <div class="wrap">
+    <div class="sum"><span id="barCount">0 productos</span><b class="num" id="barTotal">$0</b></div>
+    <a class="btn btn-main" href="#pedido">Ver pedido</a>
+  </div>
+</div>
+
+<script>
+const WA = '5491125694531';
+const PRODUCTS = [
+  { id: 'granola', name: 'Granola casera', desc: 'Avena tostada con miel y frutos secos.', img: 'img/p-granola.jpg',
+    vars: [['250 g', 7000], ['500 g', 11500], ['800 g', 18000]], def: 1 },
+  { id: 'pituquis', name: 'Pituquis', desc: 'Galletas de avena, pasas y nuez.', img: 'img/p-pituquis.jpg',
+    vars: [['x 6 unidades', 3300], ['x 12 unidades', 5500]], def: 1 },
+  { id: 'huevos', name: 'Maple de huevos de campo', desc: 'Maple de 30 unidades.', img: 'img/p-huevos.jpg',
+    vars: [['30 unidades', 7900]], def: 0 },
+  { id: 'miel', name: 'Miel 100% natural', desc: 'Frasco de 1 kg.', img: 'img/p-miel.jpg',
+    vars: [['1 kg', 10000]], def: 0 },
+  { id: 'mixc', name: 'Mix clásico', desc: 'Almendra, maní, pasas y cajú.', img: 'img/p-mix-clasico.jpg',
+    vars: [['100 g', 3800], ['200 g', 6600]], def: 1 },
+  { id: 'mixp', name: 'Mix premium', desc: 'Almendra, nuez, cajú y avellana.', img: 'img/p-mix-premium.jpg',
+    vars: [['100 g', 4400], ['200 g', 7700]], def: 1 },
+  { id: 'frutos', name: 'Frutos secos', desc: 'Bolsa de 200 g.', img: 'img/p-frutos-secos.jpg',
+    vars: [['Nuez mariposa', 5000], ['Almendras', 6000], ['Avellanas', 7000]], def: 0 },
+];
+const fmt = (n) => '$' + n.toLocaleString('es-AR');
+const $ = (s, el = document) => el.querySelector(s);
+
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem('albys_cart') || '{}') || {}; } catch (e) { cart = {}; }
+const save = () => { try { localStorage.setItem('albys_cart', JSON.stringify(cart)); } catch (e) {} };
+
+function nextThursday() {
+  const d = new Date(); const add = (4 - d.getDay() + 7) % 7 || 7; d.setDate(d.getDate() + add);
+  return d.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+$('#deliveryDate').textContent = 'Entrega el ' + nextThursday();
+
+function renderCatalog() {
+  const root = $('#catalog');
+  root.innerHTML = PRODUCTS.map((p) => `
+    <article class="prod" data-id="${p.id}">
+      <div class="ph"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
+      <div class="bd">
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="vars" role="radiogroup" aria-label="Tamaño de ${p.name}">
+          ${p.vars.map(([label, price], i) => `
+            <label><input type="radio" id="v-${p.id}-${i}" name="v-${p.id}" value="${i}" ${i === p.def ? 'checked' : ''}>
+            <span>${label}<small class="num">${fmt(price)}</small></span></label>`).join('')}
+        </div>
+        <div class="in-cart" data-incart></div>
+        <div class="buy">
+          <span class="price num" data-price>${fmt(p.vars[p.def][1])}</span>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="step"><button type="button" data-minus aria-label="Menos">−</button><output data-qty>1</output><button type="button" data-plus aria-label="Más">+</button></div>
+            <button type="button" class="btn btn-main add" data-add>Agregar</button>
+          </div>
+        </div>
+      </div>
+    </article>`).join('');
+
+  root.querySelectorAll('.prod').forEach((card) => {
+    const p = PRODUCTS.find((x) => x.id === card.dataset.id);
+    const qtyEl = $('[data-qty]', card);
+    const v = () => +$('input:checked', card).value;
+    card.addEventListener('change', () => { $('[data-price]', card).textContent = fmt(p.vars[v()][1] * +qtyEl.textContent); });
+    $('[data-minus]', card).onclick = () => { qtyEl.textContent = Math.max(1, +qtyEl.textContent - 1); card.dispatchEvent(new Event('change')); };
+    $('[data-plus]', card).onclick = () => { qtyEl.textContent = Math.min(20, +qtyEl.textContent + 1); card.dispatchEvent(new Event('change')); };
+    $('[data-add]', card).onclick = (e) => {
+      const key = p.id + ':' + v();
+      cart[key] = (cart[key] || 0) + +qtyEl.textContent;
+      qtyEl.textContent = 1; card.dispatchEvent(new Event('change'));
+      const btn = e.currentTarget; btn.textContent = 'Sumado ✓';
+      setTimeout(() => { btn.textContent = 'Agregar'; }, 1200);
+      save(); renderCart();
+    };
+  });
+}
+
+function cartLines() {
+  return Object.entries(cart).filter(([, q]) => q > 0).map(([key, q]) => {
+    const [id, vi] = key.split(':'); const p = PRODUCTS.find((x) => x.id === id);
+    if (!p || !p.vars[vi]) return null;
+    const [label, price] = p.vars[vi];
+    const name = p.vars.length > 1 ? `${p.name} ${label}` : `${p.name} (${label})`;
+    return { key, id, q, name, sub: q * price };
+  }).filter(Boolean);
+}
+
+function buildMessage(lines, total) {
+  const f = (id) => $('#' + id).value.trim();
+  const out = ['Hola Alby’s! Quiero hacer un pedido para el jueves:', ''];
+  lines.forEach((l) => out.push(`• ${l.q} × ${l.name} — ${fmt(l.sub)}`));
+  out.push('', `Total: ${fmt(total)}`, '');
+  if (f('nombre')) out.push(`Nombre: ${f('nombre')}`);
+  out.push(`Zona: ${f('zona')}`);
+  if (f('direccion')) out.push(`Dirección: ${f('direccion')}`);
+  out.push(`Pago: ${f('pago')}`);
+  if (f('primera') === 'Sí') out.push('Es mi primera compra (vi la web)');
+  if (f('notas')) out.push(`Notas: ${f('notas')}`);
+  return out.join('\n');
+}
+
+function renderCart() {
+  const lines = cartLines();
+  const total = lines.reduce((a, l) => a + l.sub, 0);
+  const count = lines.reduce((a, l) => a + l.q, 0);
+  $('#lines').innerHTML = lines.length
+    ? lines.map((l) => `<li><span><span class="q">${l.q}×</span> ${l.name}</span><span class="num">${fmt(l.sub)}</span><button type="button" class="x" data-del="${l.key}" aria-label="Quitar ${l.name}">×</button></li>`).join('')
+    : '<li class="empty" style="display:block;border:0">Todavía no sumaste productos. Elegí algo de la lista de arriba.</li>';
+  $('#lines').querySelectorAll('[data-del]').forEach((b) => b.onclick = () => { delete cart[b.dataset.del]; save(); renderCart(); });
+  $('#total').textContent = fmt(total);
+  $('#barTotal').textContent = fmt(total);
+  $('#barCount').textContent = count === 1 ? '1 producto' : `${count} productos`;
+  $('#bar').classList.toggle('on', count > 0);
+  document.querySelectorAll('.prod').forEach((card) => {
+    const n = lines.filter((l) => l.id === card.dataset.id).reduce((a, l) => a + l.q, 0);
+    $('[data-incart]', card).textContent = n ? `${n} en tu pedido` : '';
+  });
+  const send = $('#send');
+  send.setAttribute('aria-disabled', lines.length ? 'false' : 'true');
+  send.href = `https://wa.me/${WA}?text=${encodeURIComponent(buildMessage(lines, total))}`;
+  $('#sendNote').textContent = lines.length ? 'Se abre WhatsApp con el pedido escrito. Solo tenés que tocar enviar.' : 'Sumá al menos un producto para enviar el pedido.';
+}
+
+$('#orderForm').addEventListener('input', renderCart);
+$('#orderForm').addEventListener('submit', (e) => e.preventDefault());
+renderCatalog();
+renderCart();
+</script>
+</body>
+</html>

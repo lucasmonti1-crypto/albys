@@ -1,0 +1,60 @@
+<title>Propuesta App Alby's</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Manrope:wght@500;700;800&display=swap">
+<style>
+/* Layout: una columna, el carrusel como protagonista y el video debajo. */
+:root { --bg: #F6F2E4; --fg: #25271B; --muted: #6A6852; --accent: #464C28; --card: #FFFDF5; --line: #DDD5BA; --btn-fg: #F3EFD8;
+  --f-d: "Young Serif", Georgia, serif; --f-b: "Manrope", system-ui, sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #16180F; --fg: #EEEAD6; --muted: #B0AE92; --accent: #C7CB8C; --card: #1F2216; --line: #363A28; --btn-fg: #1A1D10; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #16180F; --fg: #EEEAD6; --muted: #B0AE92; --accent: #C7CB8C; --card: #1F2216; --line: #363A28; --btn-fg: #1A1D10; color-scheme: dark; }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-b); margin: 0; }
+main { max-width: 620px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 64px; display: grid; gap: 22px; }
+h1 { font-family: var(--f-d); font-weight: 400; font-size: clamp(30px, 7vw, 44px); line-height: 1.05; margin: 0; color: var(--accent); text-wrap: balance; }
+p { margin: 0; color: var(--muted); line-height: 1.5; }
+.track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; border-radius: 18px; scrollbar-width: none; background: var(--card); border: 1px solid var(--line); }
+.track::-webkit-scrollbar { display: none; }
+.track img { flex: 0 0 100%; width: 100%; aspect-ratio: 4 / 5; scroll-snap-align: center; object-fit: cover; }
+.ctrl { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.ctrl button { width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--accent); color: var(--btn-fg); font-size: 22px; cursor: pointer; }
+.ctrl button:disabled { opacity: .35; cursor: default; }
+.ctrl button:focus-visible { outline: 3px solid var(--muted); outline-offset: 3px; }
+.dots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.dots i.on { background: var(--accent); }
+.count { font-weight: 800; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; text-align: center; margin-top: 6px; }
+h2 { font-family: var(--f-d); font-weight: 400; font-size: 26px; margin: 18px 0 0; color: var(--accent); }
+video { width: 100%; max-width: 100%; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
+</style>
+<main>
+  <h1>La app de Alby’s</h1>
+  <p>Carrusel de 14 placas con la propuesta: pedidos en vivo, producción, rutas por repartidor, cobros, clientes, bot de WhatsApp y web.</p>
+  <div class="track" id="track" tabindex="0" aria-label="Placas de la propuesta"></div>
+  <div class="ctrl">
+    <button type="button" id="prev" aria-label="Placa anterior">←</button>
+    <div><div class="dots" id="dots"></div><div class="count" id="count">1 / 14</div></div>
+    <button type="button" id="next" aria-label="Placa siguiente">→</button>
+  </div>
+  <h2>En video</h2>
+  <video src="albys-propuesta.mp4" controls muted playsinline preload="metadata" poster="png/01.png"></video>
+</main>
+<script>
+const N = 14, track = document.getElementById('track'), dots = document.getElementById('dots');
+for (let i = 1; i <= N; i++) {
+  const n = String(i).padStart(2, '0');
+  track.insertAdjacentHTML('beforeend', `<img src="png/${n}.png" alt="Placa ${i} de ${N}" ${i > 2 ? 'loading="lazy"' : ''}>`);
+  dots.insertAdjacentHTML('beforeend', '<i></i>');
+}
+const idx = () => Math.round(track.scrollLeft / track.clientWidth);
+function sync() {
+  const i = idx();
+  document.getElementById('count').textContent = `${i + 1} / ${N}`;
+  [...dots.children].forEach((d, k) => d.classList.toggle('on', k === i));
+  document.getElementById('prev').disabled = i === 0;
+  document.getElementById('next').disabled = i === N - 1;
+}
+const go = (d) => track.scrollTo({ left: (idx() + d) * track.clientWidth, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+document.getElementById('prev').onclick = () => go(-1);
+document.getElementById('next').onclick = () => go(1);
+track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') go(1); if (e.key === 'ArrowLeft') go(-1); });
+track.addEventListener('scroll', () => requestAnimationFrame(sync));
+sync();
+</script>

@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<title>Propuesta App Alby's</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap">
+<style>
+/* Carrusel 1080x1350 (4:5, formato Instagram). Paleta tomada del logo de Alby's. */
+:root {
+  --paper: #F6F2E4; --card: #FFFDF5; --sunk: #ECE5CD; --line: #DDD5BA;
+  --olive: #464C28; --olive-2: #5E6636; --wheat: #A6A568; --cream: #F3EFD8; --cream-2: #CFCDA4;
+  --ink: #25271B; --muted: #6A6852; --honey: #B07A22; --honey-bg: #F3E2BF;
+  --ok: #2E7A45; --ok-bg: #DCEBD3; --bad: #B0452E; --bad-bg: #F5DCD1;
+  --wa: #1D8048; --wa-bubble: #D9F7C9; --sheet: #188038;
+  --f-d: "Young Serif", Georgia, serif; --f-b: "Manrope", system-ui, sans-serif; --f-h: "Caveat", cursive;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: #888; font-family: var(--f-b); color: var(--ink); -webkit-font-smoothing: antialiased; }
+.slide { width: 1080px; height: 1350px; position: relative; overflow: hidden; background: var(--paper); padding: 72px 76px 70px; display: flex; flex-direction: column; gap: 34px; margin: 0 auto 40px; }
+.slide.dark { background: var(--olive); color: var(--cream); }
+.meta { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 20px; letter-spacing: .16em; text-transform: uppercase; color: var(--honey); }
+.meta .brand { display: flex; align-items: center; gap: 14px; }
+.meta img { width: 48px; height: 48px; }
+.meta .n { color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: .08em; }
+.dark .meta { color: var(--wheat); } .dark .meta .n { color: var(--cream-2); }
+h1, h2, h3 { font-family: var(--f-d); font-weight: 400; margin: 0; line-height: 1.04; letter-spacing: -0.012em; text-wrap: balance; }
+h2 { font-size: 78px; color: var(--olive); }
+.dark h2 { color: var(--cream); }
+.lead { font-size: 31px; line-height: 1.38; color: var(--muted); margin: -10px 0 0; max-width: 30em; text-wrap: pretty; }
+.dark .lead { color: var(--cream-2); }
+.hand { font-family: var(--f-h); font-weight: 700; }
+.num { font-variant-numeric: tabular-nums; }
+.grow { flex: 1; min-height: 0; position: relative; }
+.foot { font-size: 24px; color: var(--muted); margin: 0; }
+.foot b { color: var(--ink); }
+.pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; font-weight: 800; font-size: 18px; white-space: nowrap; }
+.pill.ok { background: var(--ok-bg); color: var(--ok); }
+.pill.bad { background: var(--bad-bg); color: var(--bad); }
+.pill.honey { background: var(--honey-bg); color: var(--honey); }
+.pill.neutral { background: var(--sunk); color: var(--olive); }
+.ico { width: 1em; height: 1em; flex: none; }
+
+/* Ventana de navegador */
+.win { background: var(--card); border-radius: 26px; box-shadow: 0 2px 0 rgba(70,76,40,.08), 0 40px 80px -40px rgba(40,44,20,.55); overflow: hidden; border: 1px solid var(--line); display: flex; flex-direction: column; }
+.win .bar { display: flex; align-items: center; gap: 10px; padding: 16px 20px; background: var(--sunk); border-bottom: 1px solid var(--line); }
+.win .bar i { width: 14px; height: 14px; border-radius: 50%; background: var(--line); display: block; }
+.win .url { margin-left: 14px; flex: 1; background: var(--card); border-radius: 10px; padding: 7px 14px; font-size: 17px; color: var(--muted); font-weight: 600; }
+.win .url b { color: var(--ink); }
+.appnav { display: flex; align-items: center; gap: 8px; padding: 16px 22px; border-bottom: 1px solid var(--line); }
+.appnav img { width: 42px; height: 42px; }
+.appnav .t { font-family: var(--f-d); font-size: 26px; color: var(--olive); margin-right: auto; margin-left: 6px; }
+.appnav span { padding: 9px 15px; border-radius: 10px; font-weight: 700; font-size: 17px; color: var(--muted); }
+.appnav span.on { background: var(--olive); color: var(--cream); }
+
+/* Teléfono */
+.phone { width: 420px; height: 860px; border-radius: 62px; background: #1E2015; padding: 14px; box-shadow: 0 50px 90px -40px rgba(30,32,16,.7), inset 0 0 0 2px #3a3d2a; flex: none; }
+.phone .scr { width: 100%; height: 100%; border-radius: 49px; overflow: hidden; background: var(--paper); color: var(--ink); position: relative; display: flex; flex-direction: column; }
+.phone .sb { height: 52px; display: flex; justify-content: space-between; align-items: center; padding: 0 34px; font-weight: 800; font-size: 17px; flex: none; }
+.phone .sb::after { content: ""; position: absolute; left: 50%; top: 12px; transform: translateX(-50%); width: 118px; height: 32px; border-radius: 20px; background: #1E2015; }
+
+/* KPI */
+.kpis { display: grid; gap: 14px; }
+.kpi { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px; min-width: 0; }
+.kpi small { display: block; font-size: 16px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.kpi b { display: block; font-family: var(--f-d); font-weight: 400; font-size: 38px; color: var(--olive); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.kpi.bad b { color: var(--bad); } .kpi.ok b { color: var(--ok); }
+
+/* Tarjeta pedido */
+.ord { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.ord .h { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; padding: 14px 18px 10px; }
+.ord .h b { font-size: 22px; display: block; }
+.ord .h small { font-size: 16px; color: var(--muted); font-weight: 600; }
+.ord .it { padding: 0 18px 12px; font-size: 18px; line-height: 1.45; color: var(--ink); }
+.ord .it em { font-style: normal; color: var(--olive); font-weight: 800; }
+.ord .f { display: flex; justify-content: space-between; align-items: center; padding: 10px 18px; border-top: 1px dashed var(--line); background: color-mix(in srgb, var(--sunk) 45%, var(--card)); font-size: 16px; color: var(--muted); font-weight: 700; }
+.ord .f b { font-family: var(--f-d); font-weight: 400; font-size: 26px; color: var(--ink); }
+.wa-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--wa); color: #fff; font-weight: 800; border-radius: 999px; padding: 8px 16px; font-size: 17px; white-space: nowrap; }
+
+/* Bullets */
+.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.ticks li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; font-size: 27px; line-height: 1.35; }
+.ticks li::before { content: ""; width: 44px; height: 44px; border-radius: 50%; background: var(--olive) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F3EFD8' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 24px no-repeat; }
+.ticks b { color: var(--olive); }
+.dark .ticks li::before { background-color: var(--cream); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23464C28' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E"); }
+.dark .ticks b { color: var(--cream); }
+
+/* WhatsApp */
+.chat { background: #EFE7DA; display: flex; flex-direction: column; gap: 12px; padding: 18px 16px; flex: 1; }
+.chat-h { background: #F7F6F0; display: flex; align-items: center; gap: 12px; padding: 10px 18px 14px; border-bottom: 1px solid #e3ddcf; flex: none; }
+.chat-h img { width: 44px; height: 44px; border-radius: 50%; }
+.chat-h b { font-size: 19px; display: block; } .chat-h small { font-size: 14px; color: var(--muted); }
+.bub { max-width: 84%; padding: 10px 14px 8px; border-radius: 16px; font-size: 18px; line-height: 1.38; box-shadow: 0 1px 0 rgba(0,0,0,.08); background: #fff; align-self: flex-start; border-top-left-radius: 4px; }
+.bub.me { background: var(--wa-bubble); align-self: flex-end; border-top-left-radius: 16px; border-top-right-radius: 4px; }
+.bub time { display: block; text-align: right; font-size: 13px; color: #8a8a7a; margin-top: 2px; }
+.bub .opt { display: block; font-weight: 700; color: var(--olive); }
+</style>
+</head>
+<body>
+
+<!-- 1 · PORTADA -->
+<section class="slide dark" id="s1">
+  <div class="meta"><span class="brand"><img src="../assets/logo-180.png" alt="">Propuesta para Alby’s</span><span class="n">01 / 14</span></div>
+  <div style="display:flex;flex-direction:column;gap:26px;margin-top:40px;position:relative;z-index:2">
+    <h1 style="font-size:132px;color:var(--cream)">La app<br>de Alby’s.</h1>
+    <p class="hand" style="font-size:58px;color:var(--wheat);margin:0;line-height:1">pedidos · rutas · cobros · clientes</p>
+    <p class="lead" style="max-width:14em;margin-top:6px">Todo lo que hoy se hace a mano entre WhatsApp y el Excel, en un solo lugar y hecho a medida.</p>
+  </div>
+  <div class="phone" style="position:absolute;right:-30px;bottom:-190px;transform:rotate(-8deg);z-index:1">
+    <div class="scr">
+      <div class="sb"><span>9:41</span><span>●●●</span></div>
+      <div style="padding:10px 22px 0;display:flex;align-items:center;gap:12px"><img src="../assets/logo-180.png" style="width:46px;height:46px" alt=""><div><b style="font-family:var(--f-d);font-weight:400;font-size:26px;color:var(--olive)">Pedidos</b><div style="font-size:15px;color:var(--muted);font-weight:700">Jueves 15/10 · en vivo</div></div></div>
+      <div class="kpis" style="grid-template-columns:1fr 1fr;padding:18px 22px 6px">
+        <div class="kpi"><small>Pedidos</small><b>37</b></div>
+        <div class="kpi"><small>A cobrar</small><b>$412,9k</b></div>
+      </div>
+      <div style="display:grid;gap:10px;padding:10px 22px">
+        <div class="ord"><div class="h"><div><b>Sofía F.</b><small>Nordelta</small></div><span class="pill ok">Pagado</span></div></div>
+        <div class="ord"><div class="h"><div><b>Martín R.</b><small>Beccar</small></div><span class="pill bad">Debe</span></div></div>
+        <div class="ord"><div class="h"><div><b>Carolina P.</b><small>Tigre</small></div><span class="pill ok">Pagado</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:auto;position:relative;z-index:2;display:flex;align-items:center;gap:16px;font-size:26px;font-weight:800;color:var(--cream)">Deslizá <svg class="ico" style="width:40px;height:40px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+</section>
+
+<!-- 2 · HOY -->
+<section class="slide" id="s2">
+  <div class="meta"><span>Cómo es hoy</span><span class="n">02 / 14</span></div>
+  <h2>Un jueves de Alby’s, hoy.</h2>
+  <div class="grow" style="display:grid;grid-template-columns:430px 1fr;gap:44px">
+    <div style="background:#EFE7DA;border-radius:30px;padding:26px 20px;display:flex;flex-direction:column;gap:14px;overflow:hidden">
+      <div class="bub">Hola! me guardás 2 granolas de 500? <time>08:12</time></div>
+      <div class="bub">¿Llegan hoy a Nordelta?? <time>09:40</time></div>
+      <div class="bub">Te transferí ayer 🙌 <time>10:03</time></div>
+      <div class="bub me">¿Quién sos? jaja, no tengo agendado el número <time>10:05</time></div>
+      <div class="bub">Me olvidé de pedir, ¿llego para hoy? <time>11:27</time></div>
+      <div class="bub">¿Me cambiás la miel por pituquis? <time>12:15</time></div>
+      <div class="bub">¿A qué hora pasan por Beccar? <time>13:02</time></div>
+      <div class="bub me">Ya va, estoy armando la ruta 😅 <time>13:04</time></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="kpi" style="padding:22px 24px"><b style="font-size:30px;color:var(--ink);font-family:var(--f-b);font-weight:800">Pedidos desparramados</b><p style="margin:6px 0 0;font-size:23px;color:var(--muted);line-height:1.35">Llegan por WhatsApp, por DM y en persona, y se pasan a mano al Excel.</p></div>
+      <div class="kpi" style="padding:22px 24px"><b style="font-size:30px;color:var(--ink);font-family:var(--f-b);font-weight:800">¿Quién pagó?</b><p style="margin:6px 0 0;font-size:23px;color:var(--muted);line-height:1.35">Transferencias, efectivo y deudas viejas mezcladas. Nadie lo sabe al toque.</p></div>
+      <div class="kpi" style="padding:22px 24px"><b style="font-size:30px;color:var(--ink);font-family:var(--f-b);font-weight:800">La ruta, a ojo</b><p style="margin:6px 0 0;font-size:23px;color:var(--muted);line-height:1.35">San Isidro, Nordelta, Tigre… y el orden de las paradas se arma en el momento.</p></div>
+      <div class="kpi" style="padding:22px 24px"><b style="font-size:30px;color:var(--ink);font-family:var(--f-b);font-weight:800">¿Cuánto preparo?</b><p style="margin:6px 0 0;font-size:23px;color:var(--muted);line-height:1.35">Kilos de granola, paquetes de Pituquis y maples se cuentan pedido por pedido.</p></div>
+    </div>
+  </div>
+  <p class="foot" style="font-size:30px"><b>Todo esto se puede ordenar y automatizar.</b></p>
+</section>
+
+<!-- 3 · CÓMO SE CONECTA -->
+<section class="slide" id="s3">
+  <div class="meta"><span>La idea</span><span class="n">03 / 14</span></div>
+  <h2>Una app conectada a todo lo que ya usan.</h2>
+  <p class="lead">No cambia la forma de trabajar: el Excel sigue siendo la base y la app lo lee en tiempo real.</p>
+  <div class="grow" id="hub">
+    <svg viewBox="0 0 928 820" width="928" height="820" style="position:absolute;inset:0" aria-hidden="true">
+      <g stroke="#A6A568" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round" fill="none">
+        <path d="M464 410 L150 120"/><path d="M464 410 L778 120"/><path d="M464 410 L110 420"/><path d="M464 410 L818 420"/><path d="M464 410 L150 710"/><path d="M464 410 L778 710"/>
+      </g>
+      <circle cx="464" cy="410" r="170" fill="#ECE5CD"/>
+      <circle cx="464" cy="410" r="118" fill="#464C28"/>
+    </svg>
+    <img src="../assets/logo.png" alt="" style="position:absolute;left:356px;top:302px;width:216px;height:216px">
+    <style>
+      .node { position: absolute; width: 300px; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 18px 20px; display: grid; grid-template-columns: 58px 1fr; gap: 14px; align-items: center; box-shadow: 0 20px 40px -28px rgba(40,44,20,.5); }
+      .node .i { width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center; }
+      .node .i svg { width: 32px; height: 32px; }
+      .node b { font-size: 24px; display: block; line-height: 1.15; }
+      .node small { font-size: 18px; color: var(--muted); line-height: 1.3; display: block; margin-top: 3px; }
+    </style>
+    <div class="node" style="left:0;top:40px"><div class="i" style="background:#DDEEDF;color:var(--sheet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 9v12"/></svg></div><div><b>Google Sheets</b><small>El Excel de siempre</small></div></div>
+    <div class="node" style="right:0;top:40px"><div class="i" style="background:#D6F0DE;color:var(--wa)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 20l1.3-4A8 8 0 1 1 8.5 19z"/></svg></div><div><b>WhatsApp</b><small>Pedidos, avisos y cobros</small></div></div>
+    <div class="node" style="left:-30px;top:350px;width:280px"><div class="i" style="background:#F3E2BF;color:var(--honey)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13v9H3zM16 10h3l2 3v3h-5"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><div><b>Repartidores</b><small>Su ruta en el celu</small></div></div>
+    <div class="node" style="right:-30px;top:350px;width:280px"><div class="i" style="background:#DCE6F2;color:#2F5E9E"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><div><b>Google Maps</b><small>Rutas optimizadas</small></div></div>
+    <div class="node" style="left:0;top:650px"><div class="i" style="background:#F5DCD1;color:var(--bad)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg></div><div><b>Cobros</b><small>Transferencia y efectivo</small></div></div>
+    <div class="node" style="right:0;top:650px"><div class="i" style="background:#ECE5CD;color:var(--olive)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><div><b>Web + Instagram</b><small>Catálogo y pedidos online</small></div></div>
+  </div>
+</section>
+
+<!-- 4 · EL EXCEL -->
+<section class="slide" id="s4">
+  <div class="meta"><span>Paso 1 · La base</span><span class="n">04 / 14</span></div>
+  <h2>El Excel, bien armado.</h2>
+  <p class="lead">Lo dejo ordenado en Google Sheets: una pestaña por tema, listas desplegables y totales automáticos. Se sigue cargando como siempre.</p>
+  <div class="win grow" style="flex:none;height:700px">
+    <div style="display:flex;align-items:center;gap:14px;padding:16px 22px;border-bottom:1px solid var(--line)">
+      <div style="width:40px;height:52px;border-radius:6px;background:var(--sheet);display:grid;place-items:center"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2"><rect x="5" y="5" width="14" height="14" rx="1"/><path d="M5 10h14M5 14.5h14M10 10v9"/></svg></div>
+      <div><b style="font-size:24px">Alby’s — Pedidos 2026</b><div style="font-size:16px;color:var(--muted);font-weight:600">Archivo · Editar · Ver · Insertar · Formato · Datos</div></div>
+      <span class="pill ok" style="margin-left:auto">Conectado a la app</span>
+    </div>
+    <style>
+      .sheet { width: 100%; border-collapse: collapse; font-size: 19px; }
+      .sheet th { background: #F1EEE3; color: var(--muted); font-weight: 700; font-size: 16px; padding: 8px 10px; border: 1px solid #E5E0D0; text-align: left; }
+      .sheet td { padding: 12px 10px; border: 1px solid #E8E3D4; white-space: nowrap; background: #FFFEFA; }
+      .sheet tr.hd td { background: #E7EEDF; font-weight: 800; color: var(--olive); }
+      .sheet td.r { text-align: right; font-variant-numeric: tabular-nums; }
+      .sheet td.rn { background: #F1EEE3; color: var(--muted); text-align: center; width: 44px; font-size: 15px; }
+      .dd { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; font-weight: 700; font-size: 16px; }
+      .tabs { display: flex; gap: 4px; padding: 0 16px; background: #F1EEE3; border-top: 1px solid #E5E0D0; margin-top: auto; }
+      .tabs span { padding: 12px 18px; font-size: 18px; font-weight: 700; color: var(--muted); }
+      .tabs span.on { background: #FFFEFA; color: var(--sheet); box-shadow: inset 0 3px 0 var(--sheet); }
+    </style>
+    <table class="sheet">
+      <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th></tr>
+      <tr class="hd"><td class="rn">1</td><td>Pedido</td><td>Cliente</td><td>Zona</td><td>Productos</td><td>Total</td><td>Pago</td><td>Reparte</td></tr>
+      <tr><td class="rn">2</td><td>#1042</td><td>Sofía Ferrari</td><td>Nordelta</td><td>2× Gran. 500 g, Miel</td><td class="r">$33.000</td><td><span class="dd" style="background:var(--ok-bg);color:var(--ok)">Pagado ▾</span></td><td>Joaquín</td></tr>
+      <tr><td class="rn">3</td><td>#1043</td><td>Martín Rossi</td><td>Beccar</td><td>Huevos, Pituquis x12</td><td class="r">$13.400</td><td><span class="dd" style="background:var(--bad-bg);color:var(--bad)">Debe ▾</span></td><td>Joaquín</td></tr>
+      <tr><td class="rn">4</td><td>#1044</td><td>Carolina Paz</td><td>Tigre</td><td>Gran. 800 g, Mix prem.</td><td class="r">$25.700</td><td><span class="dd" style="background:var(--ok-bg);color:var(--ok)">Pagado ▾</span></td><td>Joaquín</td></tr>
+      <tr><td class="rn">5</td><td>#1045</td><td>Juan I. Bello</td><td>V. López</td><td>2× Mix clásico 200 g</td><td class="r">$13.200</td><td><span class="dd" style="background:var(--honey-bg);color:var(--honey)">Efectivo ▾</span></td><td>Tomás</td></tr>
+      <tr><td class="rn">6</td><td>#1046</td><td>Lucía Méndez</td><td>San Isidro</td><td>Gran. 500 g, Pituquis x6</td><td class="r">$14.800</td><td><span class="dd" style="background:var(--ok-bg);color:var(--ok)">Pagado ▾</span></td><td>Tomás</td></tr>
+      <tr><td class="rn">7</td><td>#1047</td><td>Pedro Gaona</td><td>Martínez</td><td>Huevos, Nuez 200 g</td><td class="r">$12.900</td><td><span class="dd" style="background:var(--bad-bg);color:var(--bad)">Debe ▾</span></td><td>Tomás</td></tr>
+      <tr><td class="rn">8</td><td>#1048</td><td>Flor Aguirre</td><td>Nordelta</td><td>Gran. 250 g, Miel</td><td class="r">$17.000</td><td><span class="dd" style="background:var(--ok-bg);color:var(--ok)">Pagado ▾</span></td><td>Joaquín</td></tr>
+      <tr><td class="rn">9</td><td></td><td></td><td></td><td style="text-align:right;font-weight:800;color:var(--olive)">Total semana</td><td class="r" style="font-weight:800;color:var(--olive)">$130.000</td><td></td><td></td></tr>
+    </table>
+    <div class="tabs"><span class="on">Pedidos</span><span>Clientes</span><span>Productos</span><span>Repartidores</span><span>Cobros</span><span>Insumos</span></div>
+  </div>
+  <p class="foot">Mismo sistema que ya funciona en <b>Don Bamón</b>, un emprendimiento de pastas frescas.</p>
+</section>
+
+<!-- 5 · PEDIDOS EN VIVO -->
+<section class="slide" id="s5">
+  <div class="meta"><span>Panel de pedidos</span><span class="n">05 / 14</span></div>
+  <h2>Todos los pedidos, en vivo.</h2>
+  <p class="lead">Lo que se carga en el Excel aparece en la app al instante, ordenado por zona y con el estado de pago.</p>
+  <div class="win grow">
+    <div class="bar"><i></i><i></i><i></i><div class="url"><b>app.albys.ar</b>/pedidos</div></div>
+    <div class="appnav"><img src="../assets/logo-180.png" alt=""><span class="t">Alby’s</span><span class="on">Pedidos</span><span>Producción</span><span>Rutas</span><span>Cobros</span><span>Clientes</span></div>
+    <div style="padding:20px 22px;display:flex;flex-direction:column;gap:16px;flex:1">
+      <div style="display:flex;align-items:center;gap:12px;font-size:19px;font-weight:700;color:var(--muted)">
+        <span class="pill neutral">Jueves 15/10</span><span class="pill neutral">Semana 42</span>
+        <span style="margin-left:auto;display:flex;align-items:center;gap:8px"><i style="width:12px;height:12px;border-radius:50%;background:var(--ok);display:block;box-shadow:0 0 0 5px var(--ok-bg)"></i>Sincronizado con el Excel · hace 12 s</span>
+      </div>
+      <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kpi"><small>Pedidos</small><b>37</b></div>
+        <div class="kpi"><small>A cobrar</small><b>$412.900</b></div>
+        <div class="kpi bad"><small>Pendiente</small><b>$86.400</b></div>
+        <div class="kpi ok"><small>Nuevos</small><b>5</b></div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span class="pill" style="background:var(--olive);color:var(--cream)">Todas · 37</span><span class="pill neutral">Nordelta · 14</span><span class="pill neutral">San Isidro · 11</span><span class="pill neutral">Tigre · 7</span><span class="pill neutral">V. López · 5</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="ord"><div class="h"><div><b>Sofía Ferrari</b><small>#1042 · Nordelta, Los Castores</small></div><span class="pill ok">Pagado</span></div><div class="it"><em>2×</em> Granola 500 g · <em>1×</em> Miel 1 kg</div><div class="f"><span>Joaquín</span><b class="num">$33.000</b></div></div>
+        <div class="ord"><div class="h"><div><b>Martín Rossi</b><small>#1043 · Beccar</small></div><span class="pill bad">Debe</span></div><div class="it"><em>1×</em> Maple huevos · <em>1×</em> Pituquis x12</div><div class="f"><span>Joaquín</span><b class="num">$13.400</b></div></div>
+        <div class="ord"><div class="h"><div><b>Carolina Paz</b><small>#1044 · Tigre centro</small></div><span class="pill ok">Pagado</span></div><div class="it"><em>1×</em> Granola 800 g · <em>1×</em> Mix premium 200 g</div><div class="f"><span>Joaquín</span><b class="num">$25.700</b></div></div>
+        <div class="ord"><div class="h"><div><b>Juan I. Bello</b><small>#1045 · Vicente López</small></div><span class="pill honey">Efectivo</span></div><div class="it"><em>2×</em> Mix clásico 200 g</div><div class="f"><span>Tomás</span><b class="num">$13.200</b></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · PRODUCCIÓN -->
+<section class="slide" id="s6">
+  <div class="meta"><span>Producción</span><span class="n">06 / 14</span></div>
+  <h2>Qué preparar para el jueves.</h2>
+  <p class="lead">La app suma todos los pedidos y te dice cuánto hornear, embolsar y comprar. Sin contar a mano.</p>
+  <style>
+    .prodrow { display: grid; grid-template-columns: 72px 1fr auto; gap: 18px; align-items: center; padding: 14px 0; border-bottom: 1px dashed var(--line); }
+    .prodrow img { width: 72px; height: 72px; border-radius: 16px; object-fit: cover; }
+    .prodrow b { font-size: 25px; display: block; }
+    .prodrow small { font-size: 18px; color: var(--muted); font-weight: 600; }
+    .prodrow .bar2 { height: 12px; border-radius: 6px; background: var(--sunk); margin-top: 8px; overflow: hidden; }
+    .prodrow .bar2 i { display: block; height: 100%; background: var(--olive); border-radius: 6px; }
+    .prodrow .q { font-family: var(--f-d); font-size: 38px; color: var(--olive); text-align: right; line-height: 1; }
+    .prodrow .q small { display: block; font-family: var(--f-b); font-size: 16px; }
+  </style>
+  <div class="grow" style="display:grid;grid-template-columns:1fr 330px;gap:26px">
+    <div class="win" style="padding:12px 26px">
+      <div class="prodrow"><img src="../assets/p-granola.jpg" alt=""><div><b>Granola casera</b><small>12 × 250 g · 18 × 500 g · 6 × 800 g</small><div class="bar2"><i style="width:100%"></i></div></div><div class="q num">16,8 kg<small>36 bolsas</small></div></div>
+      <div class="prodrow"><img src="../assets/p-pituquis.jpg" alt=""><div><b>Pituquis</b><small>9 × paquete de 6 · 7 × paquete de 12</small><div class="bar2"><i style="width:82%"></i></div></div><div class="q num">138<small>galletas</small></div></div>
+      <div class="prodrow"><img src="../assets/p-huevos.jpg" alt=""><div><b>Huevos de campo</b><small>Maples de 30 unidades</small><div class="bar2"><i style="width:42%"></i></div></div><div class="q num">15<small>maples</small></div></div>
+      <div class="prodrow"><img src="../assets/p-mix-premium.jpg" alt=""><div><b>Mix premium</b><small>4 × 100 g · 9 × 200 g</small><div class="bar2"><i style="width:36%"></i></div></div><div class="q num">2,2 kg<small>13 bolsas</small></div></div>
+      <div class="prodrow"><img src="../assets/p-mix-clasico.jpg" alt=""><div><b>Mix clásico</b><small>5 × 100 g · 10 × 200 g</small><div class="bar2"><i style="width:40%"></i></div></div><div class="q num">2,5 kg<small>15 bolsas</small></div></div>
+      <div class="prodrow" style="border:0"><img src="../assets/p-miel.jpg" alt=""><div><b>Miel 100% natural</b><small>Frascos de 1 kg</small><div class="bar2"><i style="width:22%"></i></div></div><div class="q num">8<small>frascos</small></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="win" style="padding:24px;background:var(--olive);color:var(--cream);border:0">
+        <b style="font-family:var(--f-d);font-weight:400;font-size:32px">Lista de compras</b>
+        <p style="margin:6px 0 14px;color:var(--cream-2);font-size:17px">Calculada con tus recetas</p>
+        <div style="display:grid;gap:12px;font-size:21px">
+          <div style="display:flex;justify-content:space-between"><span>Avena</span><b class="num">9,2 kg</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Nuez mariposa</span><b class="num">3,1 kg</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Almendras</span><b class="num">2,4 kg</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Pasas</span><b class="num">1,6 kg</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Cajú</span><b class="num">1,3 kg</b></div>
+          <div style="display:flex;justify-content:space-between"><span>Bolsas kraft</span><b class="num">64</b></div>
+        </div>
+      </div>
+      <div class="kpi" style="padding:20px"><small>Etiquetas</small><b style="font-size:28px">37 listas para imprimir</b><p style="margin:6px 0 0;font-size:17px;color:var(--muted)">Nombre, zona y productos de cada pedido.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · RUTAS -->
+<section class="slide" id="s7">
+  <div class="meta"><span>Rutas</span><span class="n">07 / 14</span></div>
+  <h2>Una ruta para cada repartidor.</h2>
+  <p class="lead">La app reparte los pedidos por zona y Google Maps ordena las paradas por el camino más corto.</p>
+  <div class="win grow">
+    <svg viewBox="0 0 928 640" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block;background:#ECE6CF">
+      <defs>
+        <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><path d="M0 0H34M0 0V34" stroke="#E0D8BC" stroke-width="2"/></pattern>
+      </defs>
+      <rect width="928" height="640" fill="url(#grid)"/>
+      <path d="M440 0 C 520 110, 600 170, 660 270 S 820 470, 928 520 L 928 0 Z" fill="#C3D4CC"/>
+      <path d="M470 0 C 500 40, 520 70, 560 90 M520 0 C 560 50, 620 70, 650 110 M600 0 C 640 40, 700 60, 740 120" stroke="#ECE6CF" stroke-width="10" fill="none" opacity=".6"/>
+      <ellipse cx="230" cy="215" rx="70" ry="38" fill="#C3D4CC" transform="rotate(-20 230 215)"/>
+      <path d="M0 610 L 900 -30" stroke="#F7F2E2" stroke-width="22"/>
+      <path d="M0 610 L 900 -30" stroke="#D8CDA5" stroke-width="3" stroke-dasharray="14 12"/>
+      <text x="150" y="486" font-family="Manrope" font-weight="800" font-size="15" fill="#9C9675" transform="rotate(-35.4 150 486)" letter-spacing="2">PANAMERICANA</text>
+      <g font-family="Manrope" font-weight="800" font-size="17" fill="#8A8566" letter-spacing="2">
+        <text x="150" y="150">NORDELTA</text><text x="395" y="140">TIGRE</text><text x="512" y="338">BECCAR</text><text x="560" y="392">SAN ISIDRO</text><text x="655" y="470">MARTÍNEZ</text><text x="752" y="634">VICENTE LÓPEZ</text><text x="740" y="200" fill="#7E9C93">RÍO DE LA PLATA</text>
+      </g>
+      <path id="ra" d="M520 420 L 488 352 L 452 300 L 420 230 L 360 200 L 300 238 L 250 180 L 196 258 L 268 300 L 330 330" fill="none" stroke="#464C28" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
+      <path id="rb" d="M520 420 L 585 450 L 625 495 L 670 520 L 725 545 L 775 570 L 735 598 L 670 580 L 610 540" fill="none" stroke="#B07A22" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
+      <g font-family="Manrope" font-weight="800" font-size="16" text-anchor="middle">
+        <g fill="#464C28"><circle cx="488" cy="352" r="17"/><circle cx="452" cy="300" r="17"/><circle cx="420" cy="230" r="17"/><circle cx="360" cy="200" r="17"/><circle cx="300" cy="238" r="17"/><circle cx="250" cy="180" r="17"/><circle cx="196" cy="258" r="17"/><circle cx="268" cy="300" r="17"/><circle cx="330" cy="330" r="17"/></g>
+        <g fill="#F3EFD8"><text x="488" y="358">1</text><text x="452" y="306">2</text><text x="420" y="236">3</text><text x="360" y="206">4</text><text x="300" y="244">5</text><text x="250" y="186">6</text><text x="196" y="264">7</text><text x="268" y="306">8</text><text x="330" y="336">9</text></g>
+        <g fill="#B07A22"><circle cx="585" cy="450" r="17"/><circle cx="625" cy="495" r="17"/><circle cx="670" cy="520" r="17"/><circle cx="725" cy="545" r="17"/><circle cx="775" cy="570" r="17"/><circle cx="735" cy="598" r="17"/><circle cx="670" cy="580" r="17"/><circle cx="610" cy="540" r="17"/></g>
+        <g fill="#fff"><text x="585" y="456">1</text><text x="625" y="501">2</text><text x="670" y="526">3</text><text x="725" y="551">4</text><text x="775" y="576">5</text><text x="735" y="604">6</text><text x="670" y="586">7</text><text x="610" y="546">8</text></g>
+      </g>
+      <g><circle cx="520" cy="420" r="26" fill="#25271B"/><path d="M509 424 l11 -12 l11 12 v9 h-22z" fill="#F3EFD8"/><text x="520" y="472" font-family="Manrope" font-weight="800" font-size="16" text-anchor="middle" fill="#25271B">BASE ALBY’S</text></g>
+    </svg>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+    <div class="kpi" style="display:grid;grid-template-columns:18px 1fr;gap:16px;padding:20px"><i style="background:var(--olive);border-radius:9px"></i><div><b style="font-family:var(--f-b);font-weight:800;font-size:26px;color:var(--ink)">Joaquín</b><div style="font-size:19px;color:var(--muted);font-weight:600">Tigre + Nordelta<br>9 paradas · 34 km · 2&nbsp;h&nbsp;05</div><span class="wa-btn" style="margin-top:10px">Mandar ruta por WhatsApp</span></div></div>
+    <div class="kpi" style="display:grid;grid-template-columns:18px 1fr;gap:16px;padding:20px"><i style="background:var(--honey);border-radius:9px"></i><div><b style="font-family:var(--f-b);font-weight:800;font-size:26px;color:var(--ink)">Tomás</b><div style="font-size:19px;color:var(--muted);font-weight:600">San Isidro + V. López<br>8 paradas · 22 km · 1&nbsp;h&nbsp;40</div><span class="wa-btn" style="margin-top:10px">Mandar ruta por WhatsApp</span></div></div>
+  </div>
+</section>
+
+<!-- 8 · APP DEL REPARTIDOR -->
+<section class="slide" id="s8">
+  <div class="meta"><span>Repartidores</span><span class="n">08 / 14</span></div>
+  <h2>Cada repartidor ve solo lo suyo.</h2>
+  <div class="grow" style="display:grid;grid-template-columns:420px 1fr;gap:56px;align-items:start">
+    <div class="phone">
+      <div class="scr">
+        <div class="sb"><span>16:24</span><span>●●●</span></div>
+        <div style="padding:6px 22px 14px">
+          <div style="font-size:16px;font-weight:700;color:var(--muted)">Hola Joaquín · Jueves 15/10</div>
+          <b style="font-family:var(--f-d);font-weight:400;font-size:30px;color:var(--olive)">Parada 4 de 9</b>
+          <div style="height:10px;border-radius:5px;background:var(--sunk);margin-top:10px;overflow:hidden"><i style="display:block;width:33%;height:100%;background:var(--ok)"></i></div>
+          <div style="font-size:15px;color:var(--muted);margin-top:6px;font-weight:700">3 entregados · 6 por entregar</div>
+        </div>
+        <div style="margin:0 16px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:start"><div><b style="font-size:24px">Martín Rossi</b><div style="font-size:16px;color:var(--muted);font-weight:600">Av. Centenario 1820, Beccar</div></div></div>
+          <div style="font-size:18px;line-height:1.5"><b style="color:var(--olive)">1×</b> Maple de huevos<br><b style="color:var(--olive)">1×</b> Pituquis x12</div>
+          <div style="background:var(--bad-bg);color:var(--bad);border-radius:14px;padding:12px 14px;font-weight:800;font-size:19px;display:flex;justify-content:space-between"><span>Cobrar</span><span class="num">$13.400</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <span style="background:#DCE6F2;color:#2F5E9E;border-radius:14px;padding:12px;text-align:center;font-weight:800;font-size:17px">Navegar</span>
+            <span style="background:#D6F0DE;color:var(--wa);border-radius:14px;padding:12px;text-align:center;font-weight:800;font-size:17px">Avisar que llego</span>
+          </div>
+          <span style="background:var(--olive);color:var(--cream);border-radius:14px;padding:15px;text-align:center;font-weight:800;font-size:19px">Marcar entregado y cobrado</span>
+        </div>
+        <div style="padding:16px 22px;font-size:16px;color:var(--muted);font-weight:700">Siguiente</div>
+        <div style="margin:0 16px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center"><div><b style="font-size:19px">5 · Lucía Méndez</b><div style="font-size:14px;color:var(--muted)">Tigre · 6 min</div></div><span class="pill ok" style="font-size:15px">Pagado</span></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:30px;padding-top:10px">
+      <ul class="ticks">
+        <li><span>Abre su ruta del día con <b>un solo link</b>, sin instalar nada.</span></li>
+        <li><span>Ve qué entregar y <b>cuánto cobrar</b> en cada casa.</span></li>
+        <li><span>Avisa “estoy llegando” por WhatsApp <b>con un toque</b>.</span></li>
+        <li><span>Lo que marca se <b>actualiza solo en el Excel</b>.</span></li>
+      </ul>
+      <div style="background:#EFE7DA;border-radius:26px;padding:20px;display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:16px;font-weight:800;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Lo que recibe el cliente</div>
+        <div class="bub" style="max-width:100%;font-size:21px">Hola Martín! Soy Joaquín de Alby’s 🌾 Estoy a 8 minutos con tu pedido. Total: $13.400 <time>16:24</time></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · COBROS -->
+<section class="slide" id="s9">
+  <div class="meta"><span>Cobros</span><span class="n">09 / 14</span></div>
+  <h2>Quién pagó y quién no, al toque.</h2>
+  <p class="lead">Cada pedido tiene su estado. Los que deben se recuerdan por WhatsApp con el mensaje ya escrito.</p>
+  <div class="win grow">
+    <div class="bar"><i></i><i></i><i></i><div class="url"><b>app.albys.ar</b>/cobros</div></div>
+    <div style="padding:24px;display:flex;flex-direction:column;gap:18px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="kpi ok"><small>Cobrado esta semana</small><b>$326.500</b></div>
+        <div class="kpi bad"><small>Falta cobrar · 9 pedidos</small><b>$86.400</b></div>
+      </div>
+      <div>
+        <div style="display:flex;height:22px;border-radius:11px;overflow:hidden"><i style="width:52%;background:var(--olive)"></i><i style="width:17%;background:var(--honey)"></i><i style="width:10%;background:#7FA36B"></i><i style="width:21%;background:var(--bad-bg)"></i></div>
+        <div style="display:flex;gap:22px;margin-top:10px;font-size:17px;font-weight:700;color:var(--muted)"><span>■ <span style="color:var(--olive)">Transferencia 52%</span></span><span style="color:var(--honey)">■ Efectivo 17%</span><span style="color:#5E8550">■ Mercado Pago 10%</span><span style="color:var(--bad)">■ Pendiente 21%</span></div>
+      </div>
+      <style>
+        .debt { display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px dashed var(--line); }
+        .debt b { font-size: 22px; display: block; } .debt small { font-size: 16px; color: var(--muted); font-weight: 600; }
+        .debt .m { font-family: var(--f-d); font-size: 28px; }
+      </style>
+      <div>
+        <div class="debt"><div><b>Martín Rossi</b><small>#1043 · jueves 15/10</small></div><span class="m num">$13.400</span><span class="wa-btn">Recordar</span></div>
+        <div class="debt"><div><b>Pedro Gaona</b><small>#1047 · jueves 15/10</small></div><span class="m num">$12.900</span><span class="wa-btn">Recordar</span></div>
+        <div class="debt"><div><b>Valentina Sosa</b><small>#1021 · <span style="color:var(--bad)">debe hace 2 semanas</span></small></div><span class="m num">$18.000</span><span class="wa-btn">Recordar</span></div>
+        <div class="debt" style="border:0"><div><b>Nicolás Arce</b><small>#1038 · jueves 08/10</small></div><span class="m num">$9.900</span><span class="wa-btn">Recordar</span></div>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute;right:56px;bottom:64px;width:470px;background:#EFE7DA;border-radius:26px;padding:18px;box-shadow:0 30px 60px -30px rgba(30,32,16,.6);transform:rotate(2deg)">
+    <div class="bub me" style="max-width:100%;font-size:20px;align-self:auto">Hola Valen! ¿Cómo andás? Te paso el resumen de tu pedido del 01/10: <b>$18.000</b>. Podés transferir al alias <b>albys.pedidos</b> 🙌 ¡Gracias! <time>10:30 ✓✓</time></div>
+  </div>
+</section>
+
+<!-- 10 · CRM -->
+<section class="slide" id="s10">
+  <div class="meta"><span>Clientes</span><span class="n">10 / 14</span></div>
+  <h2>Tus clientes, ordenados.</h2>
+  <p class="lead">Una ficha por cliente con todo lo que compró. La app avisa a quién conviene escribirle.</p>
+  <div class="win" style="flex:none">
+    <style>
+      .crm { width: 100%; border-collapse: collapse; font-size: 19px; }
+      .crm th { text-align: left; font-size: 15px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 14px 16px; border-bottom: 1px solid var(--line); }
+      .crm td { padding: 14px 16px; border-bottom: 1px dashed var(--line); white-space: nowrap; }
+      .crm td b { font-size: 20px; } .crm td small { display: block; font-size: 15px; color: var(--muted); font-weight: 600; }
+      .crm .r { text-align: right; font-variant-numeric: tabular-nums; }
+      .crm .pill { font-size: 15px; padding: 4px 11px; }
+    </style>
+    <table class="crm">
+      <tr><th>Cliente</th><th>Pedidos</th><th>Último</th><th class="r">Gastó</th><th>Etiqueta</th></tr>
+      <tr><td><b>Sofía Ferrari</b><small>Nordelta</small></td><td class="num">14</td><td>esta semana</td><td class="r">$318.000</td><td><span class="pill ok">Fiel</span></td></tr>
+      <tr><td><b>Flor Aguirre</b><small>Nordelta</small></td><td class="num">9</td><td>esta semana</td><td class="r">$161.500</td><td><span class="pill neutral">Granola lover</span></td></tr>
+      <tr><td><b>Lucía Méndez</b><small>San Isidro</small></td><td class="num">1</td><td>esta semana</td><td class="r">$14.800</td><td><span class="pill honey">Nueva · regalo ✓</span></td></tr>
+      <tr><td><b>Tomás Iriarte</b><small>Martínez</small></td><td class="num">6</td><td>hace 4 semanas</td><td class="r">$71.200</td><td><span class="pill bad">Dormido</span></td></tr>
+      <tr><td><b>Mercedes Ortiz</b><small>Beccar</small></td><td class="num">8</td><td>hace 5 semanas</td><td class="r">$96.400</td><td><span class="pill bad">Dormido</span></td></tr>
+    </table>
+  </div>
+  <div class="grow" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="win" style="padding:24px;background:var(--olive);color:var(--cream);border:0;justify-content:space-between">
+      <div><b style="font-family:var(--f-d);font-weight:400;font-size:34px;line-height:1.1;display:block">7 clientes no piden hace más de 3 semanas</b><p style="font-size:19px;color:var(--cream-2);margin:10px 0 0">Mensaje sugerido: “¡Hola! ¿Te guardo granola para este jueves?”</p></div>
+      <span class="wa-btn" style="align-self:flex-start;font-size:19px;padding:12px 20px;background:var(--cream);color:var(--olive)">Escribirles a los 7</span>
+    </div>
+    <div style="display:grid;gap:14px">
+      <div class="kpi"><small>Clientes activos</small><b>112</b></div>
+      <div class="kpi"><small>Vuelven a comprar</small><b>64%</b></div>
+      <div class="kpi"><small>Llegaron por el flyer</small><b>18</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · BOT -->
+<section class="slide" id="s11">
+  <div class="meta"><span>Etapa siguiente</span><span class="n">11 / 14</span></div>
+  <h2>Un bot de WhatsApp que toma pedidos.</h2>
+  <div class="grow" style="display:grid;grid-template-columns:420px 1fr;gap:56px;align-items:start">
+    <div class="phone">
+      <div class="scr">
+        <div class="sb" style="background:#F7F6F0"><span>20:05</span><span>●●●</span></div>
+        <div class="chat-h"><img src="../assets/logo-180.png" alt=""><div><b>Alby’s</b><small>cuenta de empresa</small></div></div>
+        <div class="chat">
+          <div class="bub me">Hola! quiero hacer un pedido <time>20:01</time></div>
+          <div class="bub">¡Hola Sofi! 🌾 Esta semana entregamos el <b>jueves 15/10</b> en Nordelta. ¿Qué te mando?<span class="opt">1 · Granola</span><span class="opt">2 · Pituquis</span><span class="opt">3 · Mix y frutos secos</span><span class="opt">4 · Huevos y miel</span><span class="opt">5 · Repetir mi último pedido</span><time>20:01</time></div>
+          <div class="bub me">5 <time>20:02</time></div>
+          <div class="bub">Listo: 2× Granola 500 g + 1× Miel 1 kg = <b>$33.000</b>. ¿Transferencia o efectivo? <time>20:02</time></div>
+          <div class="bub me">Transferencia <time>20:03</time></div>
+          <div class="bub">¡Anotado! ✅ Alias <b>albys.pedidos</b>. Ya estás en la lista del jueves. <time>20:03</time></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:30px;padding-top:20px">
+      <ul class="ticks">
+        <li><span>Toma pedidos <b>las 24 horas</b>, también el domingo a la noche.</span></li>
+        <li><span><b>“Repetir mi último pedido”</b> en un toque.</span></li>
+        <li><span>Cada pedido entra <b>directo al Excel</b> y a la app.</span></li>
+        <li><span>Cierra los pedidos a la hora que elijan y <b>avisa cuando sale el reparto</b>.</span></li>
+        <li><span>Si alguien pregunta algo raro, <b>le pasa la charla a una persona</b>.</span></li>
+      </ul>
+      <p class="hand" style="font-size:44px;color:var(--olive);margin:0;line-height:1.1">Menos tiempo contestando,<br>más tiempo cocinando.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · NÚMEROS -->
+<section class="slide" id="s12">
+  <div class="meta"><span>Números</span><span class="n">12 / 14</span></div>
+  <h2>Los números del negocio, solos.</h2>
+  <p class="lead">Cuánto venden por semana, qué producto deja más y cuántos clientes vuelven. Sin armar una sola fórmula.</p>
+  <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi"><small>Ticket promedio</small><b>$14.300</b></div>
+    <div class="kpi"><small>Producto estrella</small><b style="font-size:32px;padding-top:4px">Granola 500 g</b></div>
+    <div class="kpi"><small>Zona top</small><b>Nordelta</b></div>
+  </div>
+  <div class="win grow" style="padding:26px 28px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:24px">Ventas por semana</b><span style="font-size:17px;color:var(--muted);font-weight:700">miles de $ · últimas 10 semanas</span></div>
+    <svg id="chart" viewBox="0 0 880 470" width="100%" style="display:block;margin-top:10px"></svg>
+  </div>
+  <p class="foot" style="font-size:20px">Números de ejemplo para mostrar cómo se vería.</p>
+</section>
+
+<!-- 13 · WEB -->
+<section class="slide" id="s13">
+  <div class="meta"><span>Para vender más</span><span class="n">13 / 14</span></div>
+  <h2>Una web para el link de la bio.</h2>
+  <div class="grow" style="display:grid;grid-template-columns:420px 1fr;gap:52px;align-items:start">
+    <div class="phone"><div class="scr"><img src="landing-mobile.png" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top"></div></div>
+    <div style="display:flex;flex-direction:column;gap:28px">
+      <ul class="ticks">
+        <li><span>Catálogo con <b>todos los precios</b> siempre al día.</span></li>
+        <li><span>El cliente arma el pedido y se manda <b>por WhatsApp ya escrito</b>.</span></li>
+        <li><span>Zonas, días de entrega y el <b>regalo de primera compra</b>.</span></li>
+      </ul>
+      <div>
+        <div style="font-size:18px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--honey);margin-bottom:14px">Más ideas para sumar</div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Suscripción semanal de granola</span>
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Programa de referidos</span>
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Pedido mínimo por zona</span>
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Stock de insumos</span>
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Encuestas post-entrega</span>
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Cajas regalo y empresas</span>
+          <span class="pill neutral" style="font-size:20px;padding:10px 16px">Copa Alby’s: inscripciones</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · PLAN + CIERRE -->
+<section class="slide dark" id="s14">
+  <div class="meta"><span class="brand"><img src="../assets/logo-180.png" alt="">Cómo lo armamos</span><span class="n">14 / 14</span></div>
+  <h2 style="font-size:92px">Por etapas, empezando por lo que más ayuda.</h2>
+  <style>
+    .road { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+    .road li { display: grid; grid-template-columns: 70px 1fr; gap: 24px; position: relative; padding-bottom: 30px; }
+    .road li::before { content: ""; position: absolute; left: 34px; top: 66px; bottom: 0; width: 2px; background: var(--wheat); opacity: .5; }
+    .road li:last-child::before { display: none; }
+    .road .k { width: 70px; height: 70px; border-radius: 50%; background: var(--cream); color: var(--olive); display: grid; place-items: center; font-family: var(--f-d); font-size: 32px; }
+    .road b { font-size: 31px; display: block; color: var(--cream); }
+    .road small { font-size: 22px; color: var(--cream-2); line-height: 1.35; display: block; margin-top: 4px; }
+    .road em { font-style: normal; color: var(--wheat); font-weight: 800; font-size: 19px; letter-spacing: .08em; text-transform: uppercase; }
+  </style>
+  <ol class="road">
+    <li><span class="k">1</span><div><em>Semana 1</em><b>Excel ordenado + panel de pedidos y cobros</b><small>Ya desde el primer jueves saben qué preparar y quién debe.</small></div></li>
+    <li><span class="k">2</span><div><em>Semanas 2 y 3</em><b>Rutas por repartidor + app del repartidor</b><small>Google Maps arma el recorrido y cada uno lo abre en su celu.</small></div></li>
+    <li><span class="k">3</span><div><em>Semana 4</em><b>Clientes, recordatorios y la web</b><small>Mensajes de WhatsApp en un toque y catálogo para la bio.</small></div></li>
+    <li><span class="k">4</span><div><em>Después</em><b>Bot de WhatsApp</b><small>Toma pedidos solo y los carga en el Excel.</small></div></li>
+  </ol>
+  <div style="margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:30px">
+    <div>
+      <p class="hand" style="font-size:66px;color:var(--wheat);margin:0;line-height:1">¿Lo probamos un mes?</p>
+      <p style="font-size:24px;color:var(--cream-2);margin:10px 0 0;max-width:24em">Con los pedidos reales de Alby’s, y si no suma, no sigue.</p>
+    </div>
+    <img src="../assets/logo.png" alt="" style="width:170px;height:170px">
+  </div>
+</section>
+
+<script>
+// Gráfico de barras de la placa 12, dibujado a escala.
+(function () {
+  const data = [210, 236, 228, 262, 251, 289, 304, 296, 341, 413];
+  const weeks = ['S33','S34','S35','S36','S37','S38','S39','S40','S41','S42'];
+  const svg = document.getElementById('chart');
+  const W = 880, H = 470, L = 60, B = 40, T = 30, max = 450;
+  const y = (v) => H - B - (v / max) * (H - B - T);
+  let out = '';
+  for (let v = 0; v <= max; v += 150) {
+    out += `<line x1="${L}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="#E2DBC3" stroke-width="2"/>`;
+    out += `<text x="${L - 12}" y="${y(v) + 6}" text-anchor="end" font-family="Manrope" font-weight="700" font-size="17" fill="#6A6852">${v}</text>`;
+  }
+  const bw = 56, gap = (W - L - data.length * bw) / data.length;
+  data.forEach((v, i) => {
+    const x = L + gap / 2 + i * (bw + gap); const last = i === data.length - 1;
+    out += `<rect x="${x}" y="${y(v)}" width="${bw}" height="${H - B - y(v)}" rx="10" fill="${last ? '#464C28' : '#C9C79A'}"/>`;
+    out += `<text x="${x + bw / 2}" y="${H - 12}" text-anchor="middle" font-family="Manrope" font-weight="700" font-size="16" fill="#6A6852">${weeks[i]}</text>`;
+    if (last) out += `<text x="${x + bw / 2}" y="${y(v) - 12}" text-anchor="middle" font-family="Young Serif" font-size="26" fill="#464C28">${v}k</text>`;
+  });
+  svg.innerHTML = out;
+})();
+</script>
+</body>
+</html>
