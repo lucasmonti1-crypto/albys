@@ -54,7 +54,7 @@ header p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; max-width: 44
   <header>
     <div>
       <h1>La app de Alby’s</h1>
-      <p>Pedidos en vivo, producción, rutas por repartidor, cobros, clientes, métricas, bot de WhatsApp y web. Deslizá para ver las 15 placas y tocá una para verla grande.</p>
+      <p>Pedidos en vivo, producción, rutas por repartidor, cobros, clientes, métricas, contenido, bot de WhatsApp y web. Deslizá para ver las 17 placas y tocá una para verla grande.</p>
     </div>
   </header>
   <div class="track" id="track" tabindex="0" aria-label="Placas de la propuesta"></div>
@@ -72,7 +72,7 @@ header p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; max-width: 44
   <span class="hint">Tocá la imagen para verla en tamaño real · Esc para cerrar</span>
 </div>
 <script>
-const N = 15, track = document.getElementById('track'), dots = document.getElementById('dots');
+const N = 17, track = document.getElementById('track'), dots = document.getElementById('dots');
 for (let i = 1; i <= N; i++) {
   const n = String(i).padStart(2, '0');
   track.insertAdjacentHTML('beforeend', `<img src="png/${n}.png" alt="Placa ${i} de ${N}" tabindex="0" role="button" data-i="${i - 1}" ${i > 3 ? 'loading="lazy"' : ''}>`);

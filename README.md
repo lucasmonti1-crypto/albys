@@ -6,14 +6,14 @@ Material para presentarle a Alby’s (granola, Pituquis, frutos secos, miel y hu
 
 | Carpeta | Qué es |
 |---|---|
-| `propuesta/png/` | Carrusel de 15 placas 1080×1350 (formato Instagram 4:5), listas para mandar por WhatsApp o subir. |
-| `propuesta/albys-propuesta.mp4` | Las mismas 15 placas en video (con fundidos). |
+| `propuesta/png/` | Carrusel de 17 placas 1080×1350 (formato Instagram 4:5), listas para mandar por WhatsApp o subir. |
+| `propuesta/albys-propuesta.mp4` | Las mismas 17 placas en video (con fundidos). |
 | `propuesta/slides.html` | La fuente de las placas (HTML/CSS). Editás textos acá y volvés a renderizar. |
 | `propuesta/visor.html` | Visor del carrusel + video. |
 | `landing/` | Landing de Alby’s: catálogo con precios, carrito y pedido que se manda por WhatsApp ya escrito. HTML estático, sin build. |
 | `assets/` | Logo y fotos de producto recortadas de los flyers de Instagram. |
 
-## Las 15 placas
+## Las 17 placas
 
 1. Portada: “La app de Alby’s”
 2. Cómo es un jueves hoy (WhatsApp, cobros, ruta a ojo, cuánto preparar)
@@ -29,7 +29,9 @@ Material para presentarle a Alby’s (granola, Pituquis, frutos secos, miel y hu
 12. Números del negocio (ventas por semana)
 13. Métricas para decidir: productos, zonas y mejores clientes, con conclusiones
 14. La web para el link de la bio + ideas extra
-15. Plan por etapas y cierre
+15. Contenido: tablero de posts, carruseles, historias y TikToks por estado y fecha
+16. Marca, mensajes guardados de WhatsApp y biblioteca para Meta Ads
+17. Plan por etapas y cierre
 
 ## Lógica de la página de métricas
 
