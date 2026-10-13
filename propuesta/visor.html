@@ -12,10 +12,27 @@ main { width: 100%; max-width: min(1320px, calc((100vh - 250px) * 1.6 + var(--ga
 header { display: flex; justify-content: space-between; align-items: end; gap: 12px 24px; flex-wrap: wrap; }
 h1 { font-family: var(--f-d); font-weight: 400; font-size: clamp(28px, 4.4vw, 46px); line-height: 1.05; margin: 0; color: var(--accent); text-wrap: balance; }
 header p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; max-width: 44em; }
-.track { display: flex; gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.track { display: flex; gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; padding: 14px 12px; margin: -14px -12px; scroll-padding-inline: 12px; }
 .track::-webkit-scrollbar { display: none; }
 .track:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 16px; }
-.track img { flex: 0 0 calc((100% - var(--gap)) / 2); width: calc((100% - var(--gap)) / 2); aspect-ratio: 4 / 5; scroll-snap-align: start; object-fit: cover; border-radius: 16px; border: 1px solid var(--line); background: var(--card); }
+.track img { flex: 0 0 calc((100% - var(--gap)) / 2); width: calc((100% - var(--gap)) / 2); aspect-ratio: 4 / 5; scroll-snap-align: start; object-fit: cover; border-radius: 16px; border: 1px solid var(--line); background: var(--card);  cursor: zoom-in; transition: transform .22s ease, box-shadow .22s ease; }
+@media (hover: hover) { .track img:hover { transform: scale(1.03); box-shadow: 0 18px 40px -18px rgba(0,0,0,.45); position: relative; z-index: 1; } }
+.track img:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .track img { transition: none; } }
+/* Imagen ampliada */
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(12,14,8,.9); display: grid; place-items: center; overflow: auto; padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px)); }
+.lb img { max-width: 100%; max-height: calc(100vh - 32px); width: auto; height: auto; border-radius: 12px; cursor: zoom-in; box-shadow: 0 30px 80px -20px rgba(0,0,0,.7); }
+.lb[hidden] { display: none; }
+.lb.zoom .hint { display: none; }
+.lb.zoom { place-items: start center; }
+.lb.zoom img { max-height: none; width: 1080px; max-width: none; cursor: zoom-out; }
+.lb button { position: fixed; width: 50px; height: 50px; border-radius: 50%; border: 0; background: rgba(246,242,228,.92); color: #25271B; font: 700 22px/1 var(--f-b); cursor: pointer; z-index: 2; }
+.lb button:focus-visible { outline: 3px solid #F6F2E4; outline-offset: 3px; }
+.lb .x { top: calc(14px + env(safe-area-inset-top, 0px)); right: 14px; }
+.lb .p { left: 14px; top: 50%; transform: translateY(-50%); }
+.lb .nx { right: 14px; top: 50%; transform: translateY(-50%); }
+.lb .hint { position: fixed; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); color: #E9E6D2; font-size: 13px; font-weight: 700; background: rgba(0,0,0,.4); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+@media (max-width: 720px) { .lb .p, .lb .nx { top: auto; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); transform: none; } .lb .hint { display: none; } }
 @media (max-width: 720px) {
   :root { --gap: 12px; }
   main { max-width: 100%; }
@@ -37,7 +54,7 @@ header p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; max-width: 44
   <header>
     <div>
       <h1>La app de Alby’s</h1>
-      <p>Pedidos en vivo, producción, rutas por repartidor, cobros, clientes, métricas, bot de WhatsApp y web. Deslizá para ver las 15 placas.</p>
+      <p>Pedidos en vivo, producción, rutas por repartidor, cobros, clientes, métricas, bot de WhatsApp y web. Deslizá para ver las 15 placas y tocá una para verla grande.</p>
     </div>
   </header>
   <div class="track" id="track" tabindex="0" aria-label="Placas de la propuesta"></div>
@@ -47,11 +64,18 @@ header p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; max-width: 44
     <button type="button" id="next" aria-label="Placa siguiente">→</button>
   </div>
 </main>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Placa ampliada" hidden>
+  <img id="lbImg" alt="">
+  <button type="button" class="x" id="lbClose" aria-label="Cerrar">✕</button>
+  <button type="button" class="p" id="lbPrev" aria-label="Placa anterior">←</button>
+  <button type="button" class="nx" id="lbNext" aria-label="Placa siguiente">→</button>
+  <span class="hint">Tocá la imagen para verla en tamaño real · Esc para cerrar</span>
+</div>
 <script>
 const N = 15, track = document.getElementById('track'), dots = document.getElementById('dots');
 for (let i = 1; i <= N; i++) {
   const n = String(i).padStart(2, '0');
-  track.insertAdjacentHTML('beforeend', `<img src="png/${n}.png" alt="Placa ${i} de ${N}" ${i > 3 ? 'loading="lazy"' : ''}>`);
+  track.insertAdjacentHTML('beforeend', `<img src="png/${n}.png" alt="Placa ${i} de ${N}" tabindex="0" role="button" data-i="${i - 1}" ${i > 3 ? 'loading="lazy"' : ''}>`);
   dots.insertAdjacentHTML('beforeend', `<button type="button" aria-label="Ir a la placa ${i}"></button>`);
 }
 const step = () => { const a = track.children[0], b = track.children[1]; return b.offsetLeft - a.offsetLeft; };
@@ -73,4 +97,34 @@ track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preve
 track.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
 addEventListener('resize', sync);
 sync();
+// Ampliar una placa
+const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg');
+let cur = 0, lastFocus = null;
+function show(i) {
+  cur = (i + N) % N;
+  lbImg.src = `png/${String(cur + 1).padStart(2, '0')}.png`;
+  lbImg.alt = `Placa ${cur + 1} de ${N}`;
+  lb.classList.remove('zoom'); lb.scrollTo(0, 0);
+}
+function openLb(i) { lastFocus = document.activeElement; show(i); lb.hidden = false; document.body.style.overflow = 'hidden'; document.getElementById('lbClose').focus(); }
+function closeLb() { lb.hidden = true; document.body.style.overflow = ''; goTo(Math.min(cur, N - perView())); if (lastFocus) lastFocus.focus(); }
+let downX = null;
+track.addEventListener('pointerdown', (e) => { downX = e.clientX; });
+track.addEventListener('click', (e) => {
+  const img = e.target.closest('img[data-i]');
+  if (!img || (downX !== null && Math.abs(e.clientX - downX) > 8)) return;
+  openLb(+img.dataset.i);
+});
+track.addEventListener('keydown', (e) => { const img = e.target.closest('img[data-i]'); if (img && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openLb(+img.dataset.i); } });
+lbImg.addEventListener('click', (e) => { e.stopPropagation(); lb.classList.toggle('zoom'); });
+lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+document.getElementById('lbClose').onclick = closeLb;
+document.getElementById('lbPrev').onclick = () => show(cur - 1);
+document.getElementById('lbNext').onclick = () => show(cur + 1);
+addEventListener('keydown', (e) => {
+  if (lb.hidden) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowRight') show(cur + 1);
+  if (e.key === 'ArrowLeft') show(cur - 1);
+});
 </script>
